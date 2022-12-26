@@ -1,5 +1,5 @@
-import Main from "../../components/base/main/main";
-import Sidebar from "../../components/base/sidebar/sidebar";
+import Main from "../../components/layout/main/main";
+import Sidebar from "../../components/layout/sidebar/sidebar";
 import styles from "./exercises.module.scss";
 
 const Exercises = () => {

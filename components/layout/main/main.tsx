@@ -6,20 +6,17 @@ interface MainProps {
   isFullWidth: boolean
 }
 
-const Main = ({ children, isFullWidth }: MainProps) => {
+const Main = ({
+  children = null,
+  isFullWidth = true,
+}: MainProps) => {
   const classes = classnames({
-    mainFullWidth: isFullWidth,
-    mainSidebarWidth: !isFullWidth,
+    [styles.mainFullWidth]: isFullWidth,
+    [styles.mainSidebarWidth]: !isFullWidth,
   });
 
   return (
-    <main
-      className={
-        isFullWidth
-          ? styles.mainFullWidth
-          : styles.mainSidebarWidth
-      }
-    >
+    <main className={classes}>
       {children}
     </main>
   );
