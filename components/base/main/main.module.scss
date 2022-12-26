@@ -1,0 +1,9 @@
+@use "../../../styles/layout-utils";
+
+.mainFullWidth {
+  @include layout-utils.grid-main-full;
+}
+
+.mainSidebarWidth {
+  @include layout-utils.grid-main-sidebar;
+}

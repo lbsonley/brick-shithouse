@@ -1,0 +1,26 @@
+.workoutLog {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.workoutLogMain,
+.workoutLogSidebar {
+  height: 100vh;
+  border-radius: 6px;
+  background-color: rebeccapurple;
+}
+
+.workoutLogSidebar {
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: 10vw;
+
+  &.expanded {
+    flex-basis: 25vw;
+  }
+}
+
+.workoutLogMain {
+  flex: 1 0 75vw;
+}
+

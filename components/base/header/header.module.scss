@@ -1,0 +1,45 @@
+@use "../../../styles/layout-utils";
+@use "../../../styles/spaces";
+@use "../../../styles/colors";
+
+.header {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+
+  @include layout-utils.grid-header;
+}
+
+.headerBrand {
+  @include layout-utils.flex-center;
+
+  min-width: spaces.$space-80;
+  flex: 0 1 auto;
+}
+
+.headerNav {
+  display: flex;
+  flex: 1 0 auto;
+  justify-content: flex-end;
+}
+
+.headerNavList {
+  display: flex;
+  flex-flow: row nowrap;
+  list-style: none;
+}
+
+.headerNavListItem {
+  display: flex;
+}
+
+.headerNavLink {
+  @include layout-utils.flex-center;
+
+  padding: spaces.$space-12;
+  border-bottom: 2px solid transparent;
+
+  &.isActive {
+    border-bottom-color: colors.$color-brand;
+  }
+}

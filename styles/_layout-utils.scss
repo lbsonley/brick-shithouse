@@ -1,0 +1,31 @@
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin grid-header {
+  grid-column: layout-left / layout-right;
+  grid-row: layout-top / header-end;
+}
+
+@mixin grid-sidebar {
+  padding-left: 8px;
+  grid-column: template-left / sidebar-end;
+  grid-row: template-top / template-bottom;
+}
+
+@mixin grid-main-sidebar {
+  padding-right: 8px;
+  grid-column: main-start / template-right;
+  grid-row: template-top / template-bottom;
+  overflow-y: scroll;
+}
+
+@mixin grid-main-full {
+  padding-right: 8px;
+  padding-left: 8px;
+  grid-column: template-left / template-right;
+  grid-row: template-top / template-bottom;
+  overflow-y: scroll;
+}
