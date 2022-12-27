@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
+
 "use client";
 
 import { useState, KeyboardEvent } from "react";
@@ -5,7 +7,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { FaUser } from "react-icons/fa";
 import styles from "./user-menu.module.scss";
-import useEventListener from "../../../app/hooks/use-event-listener";
+import useEventListener from "../../../hooks/use-event-listener";
 
 const UserMenu = () => {
   const currentRoute = usePathname();
