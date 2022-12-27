@@ -1,5 +1,3 @@
-"use client";
-
 import Providers from "./providers";
 import Header from "../components/layout/header/header";
 import "../styles/globals.scss";

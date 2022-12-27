@@ -1,11 +1,13 @@
 @use "../../../styles/layout-utils";
 @use "../../../styles/spaces";
 @use "../../../styles/colors";
+@use "../../../styles/defaults";
 
 .header {
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
+  box-shadow: defaults.$box-shadow;
 
   @include layout-utils.grid-header;
 }
@@ -31,6 +33,7 @@
 
 .headerNavListItem {
   display: flex;
+  align-items: center;
 }
 
 .headerNavLink {
@@ -40,6 +43,6 @@
   border-bottom: 2px solid transparent;
 
   &.isActive {
-    border-bottom-color: colors.$color-brand;
+    border-bottom-color: colors.$brand;
   }
 }

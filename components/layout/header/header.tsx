@@ -1,66 +1,69 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useAuth0 } from "@auth0/auth0-react";
 import Link from "next/link";
+import { useUser } from "@auth0/nextjs-auth0/client";
+import UserMenu from "./user-menu";
 import styles from "./header.module.scss";
 
 const Header = () => {
   const currentRoute = usePathname();
-  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
-
-  console.log(isAuthenticated);
+  const { user, isLoading } = useUser();
 
   return (
     <header className={styles.header}>
       <div className={styles.headerBrand}>
         <Link href="/">BSA</Link>
       </div>
-      {isAuthenticated ? (
+      {!isLoading && (
         <nav className={styles.headerNav}>
           <ul className={styles.headerNavList}>
-            <li className={styles.headerNavListItem}>
-              <Link
-                href="/exercises"
-                className={`
-                  ${styles.headerNavLink}
-                  ${currentRoute === "/exercises" ? styles.isActive : ""}
-                `}
-              >
-                Exercises
-              </Link>
-            </li>
-            <li className={styles.headerNavListItem}>
-              <span className={styles.headerNavLink}>
-                Routines
-              </span>
-            </li>
-            <li className={styles.headerNavListItem}>
-              <span className={styles.headerNavLink}>
-                Workouts
-              </span>
-            </li>
-            <li className={styles.headerNavListItem}>
-              <span className={styles.headerNavLink}>
-                Schedule
-              </span>
-            </li>
+          {user ? (
+            <>
+              <li className={styles.headerNavListItem}>
+                <Link
+                  href="/exercises"
+                  className={`
+                    ${styles.headerNavLink}
+                    ${currentRoute === "/exercises" ? styles.isActive : ""}
+                  `}
+                >
+                  Exercises
+                </Link>
+              </li>
+              <li className={styles.headerNavListItem}>
+                <span className={styles.headerNavLink}>
+                  Routines
+                </span>
+              </li>
+              <li className={styles.headerNavListItem}>
+                <span className={styles.headerNavLink}>
+                  Workouts
+                </span>
+              </li>
+              <li className={styles.headerNavListItem}>
+                <span className={styles.headerNavLink}>
+                  Schedule
+                </span>
+              </li>
+              <li className={styles.headerNavListItem}>
+                <UserMenu />
+              </li>
+            </>
+          ) : (
             <li>
-              <button
-                className={styles.logoutButton}
-                onClick={() => logout()}
-              >Logout</button>
+              <a
+                className={styles.headerNavLink}
+                href="/api/auth/login"
+              >
+                Login
+              </a>
             </li>
+          )}
           </ul>
         </nav>
-      ) : (
-        <button
-          className={styles.loginButton}
-          onClick={() => loginWithRedirect()}
-        >
-          Login
-        </button>
       )}
+      <div className={styles.headerBackdrop}></div>
     </header>
   );
 };
