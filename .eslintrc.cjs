@@ -1,5 +1,8 @@
 module.exports = {
   extends: ["next/core-web-vitals", "plugin:unicorn/recommended"],
+  ignorePatterns: [
+    "graphql/*",
+  ],
   rules: {
     "comma-dangle": ["error", "always-multiline"],
     semi: "error",
