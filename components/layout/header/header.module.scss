@@ -1,4 +1,5 @@
 @use "../../../styles/layout-utils";
+@use "../../../styles/utils";
 @use "../../../styles/spaces";
 @use "../../../styles/colors";
 @use "../../../styles/defaults";
@@ -7,7 +8,7 @@
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
-  box-shadow: defaults.$box-shadow;
+  box-shadow: defaults.$box-shadow-bottom;
 
   @include layout-utils.grid-header;
 }
@@ -38,11 +39,7 @@
 
 .headerNavLink {
   @include layout-utils.flex-center;
+  @include utils.block-link;
 
   padding: spaces.$space-12;
-  border-bottom: 2px solid transparent;
-
-  &.isActive {
-    border-bottom-color: colors.$brand;
-  }
 }

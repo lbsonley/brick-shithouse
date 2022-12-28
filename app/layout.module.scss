@@ -11,7 +11,7 @@
   display: grid;
   grid-column: layout-left / layout-right;
   grid-row: body-start / layout-bottom;
-  grid-template-columns: [template-left] 300px [sidebar-end main-start] 1fr [template-right];
+  grid-template-columns: [template-left] auto [sidebar-end main-start] 1fr [template-right];
   grid-template-rows: [template-top] 1fr [template-bottom];
   overflow-y: scroll;
 }

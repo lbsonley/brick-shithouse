@@ -1,6 +1,7 @@
 @use "../../../styles/colors";
 @use "../../../styles/spaces";
 @use "../../../styles/defaults";
+@use "../../../styles/utils";
 
 .userMenu {
   position: relative;
@@ -26,7 +27,7 @@
   width: 200px;
   padding: spaces.$space-12;
   background-color: colors.$white;
-  box-shadow: defaults.$box-shadow;
+  box-shadow: defaults.$box-shadow-bottom;
   transform: translateX(205px);
   transition: transform defaults.$transition;
 }
@@ -58,11 +59,6 @@
 
 .userMenuLink {
   display: block;
-  border-bottom: 2px solid transparent;
-  transition: border-bottom defaults.$transition;
 
-  &:hover,
-  &.isActive {
-    border-bottom-color: colors.$brand;
-  }
+  @include utils.block-link;
 }

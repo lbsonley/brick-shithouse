@@ -1,5 +1,8 @@
 @use "../../../styles/layout-utils";
+@use "../../../styles/defaults";
 
 .sidebar {
   @include layout-utils.grid-sidebar;
+
+  box-shadow: defaults.$box-shadow-right;
 }

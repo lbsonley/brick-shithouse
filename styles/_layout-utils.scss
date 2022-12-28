@@ -1,3 +1,7 @@
+@use "./spaces";
+@use "./defaults";
+@use "./media-queries";
+
 @mixin flex-center {
   display: flex;
   align-items: center;
@@ -10,22 +14,38 @@
 }
 
 @mixin grid-sidebar {
-  padding-left: 8px;
+  padding: spaces.$space-8;
   grid-column: template-left / sidebar-end;
   grid-row: template-top / template-bottom;
+
+  @include media-queries.sm-up {
+    padding: spaces.$space-16;
+  }
 }
 
 @mixin grid-main-sidebar {
-  padding-right: 8px;
+  padding: spaces.$space-8;
   grid-column: main-start / template-right;
   grid-row: template-top / template-bottom;
   overflow-y: scroll;
+
+  @include media-queries.sm-up {
+    padding: spaces.$space-16;
+  }
 }
 
 @mixin grid-main-full {
-  padding-right: 8px;
-  padding-left: 8px;
+  padding: spaces.$space-8;
   grid-column: template-left / template-right;
   grid-row: template-top / template-bottom;
   overflow-y: scroll;
+
+  @include media-queries.sm-up {
+    padding: spaces.$space-16;
+  }
+}
+
+@mixin content-max-width-narrow {
+  max-width: defaults.$max-content-width-narrow;
+  margin: 0 auto;
 }
