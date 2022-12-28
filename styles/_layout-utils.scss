@@ -23,20 +23,9 @@
   }
 }
 
-@mixin grid-main-sidebar {
+@mixin grid-main {
   padding: spaces.$space-8;
   grid-column: main-start / layout-right;
-  grid-row: body-start / body-end;
-  overflow-y: scroll;
-
-  @include media-queries.sm-up {
-    padding: spaces.$space-16;
-  }
-}
-
-@mixin grid-main-full {
-  padding: spaces.$space-8;
-  grid-column: layout-left / layout-right;
   grid-row: body-start / body-end;
   overflow-y: scroll;
 

@@ -9,7 +9,7 @@ import { FaUser } from "react-icons/fa";
 import styles from "./user-menu.module.scss";
 import useEventListener from "../../../hooks/use-event-listener";
 
-const UserMenu = () => {
+const UserMenu = ({ user }: any) => {
   const currentRoute = usePathname();
   let [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -44,7 +44,7 @@ const UserMenu = () => {
                 `${styles.userMenuLink}
                 ${currentRoute === "/profile" ? styles.isActive : ""}`
               }
-              href="/profile"
+              href={`/profile/${user.sub}`}
               onClick={() => handleUserMenuClick(!isMenuOpen)}
               >
               Profile

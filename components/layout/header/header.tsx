@@ -49,7 +49,9 @@ const Header = () => {
                 </span>
               </li>
               <li className={styles.headerNavListItem}>
-                <UserMenu />
+                <UserMenu
+                  user={user}
+                />
               </li>
             </>
           ) : (

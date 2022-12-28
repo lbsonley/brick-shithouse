@@ -7,6 +7,16 @@ module.exports = {
     "max-len": ["error", {
       code: 80,
     }],
+    "unicorn/filename-case": [
+      "error",
+      {
+        "case": "kebabCase",
+        "ignore": [
+          // allow pascalCase in [dynamicRoutes]
+          /^\[[a-z][A-Za-z]*]\.tsx$/,
+        ],
+      },
+    ],
     "unicorn/no-null": "off",
     "unicorn/no-array-reduce": "off",
     "unicorn/prevent-abbreviations": [
@@ -15,6 +25,8 @@ module.exports = {
         allowList: {
           "props": true,
           "Props": true,
+          "params": true,
+          "Params": true,
         },
       },
     ],
