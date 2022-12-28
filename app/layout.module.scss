@@ -2,16 +2,6 @@
   display: grid;
   width: 100vw;
   height: 100vh;
-  column-gap: 16px;
-  grid-template-columns: [layout-left] 1fr [layout-right];
-  grid-template-rows: [layout-top] auto [header-end body-start] 1fr [layout-bottom];
-}
-
-.templateGrid {
-  display: grid;
-  grid-column: layout-left / layout-right;
-  grid-row: body-start / layout-bottom;
-  grid-template-columns: [template-left] auto [sidebar-end main-start] 1fr [template-right];
-  grid-template-rows: [template-top] 1fr [template-bottom];
-  overflow-y: scroll;
+  grid-template-columns: [layout-left] auto [sidebar-end main-start] 1fr [layout-right];
+  grid-template-rows: [layout-top] auto [header-end body-start] 1fr [body-end footer-start] auto [layout-bottom];
 }

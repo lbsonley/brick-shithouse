@@ -15,8 +15,8 @@
 
 @mixin grid-sidebar {
   padding: spaces.$space-8;
-  grid-column: template-left / sidebar-end;
-  grid-row: template-top / template-bottom;
+  grid-column: layout-left / sidebar-end;
+  grid-row: body-start / body-end;
 
   @include media-queries.sm-up {
     padding: spaces.$space-16;
@@ -25,8 +25,8 @@
 
 @mixin grid-main-sidebar {
   padding: spaces.$space-8;
-  grid-column: main-start / template-right;
-  grid-row: template-top / template-bottom;
+  grid-column: main-start / layout-right;
+  grid-row: body-start / body-end;
   overflow-y: scroll;
 
   @include media-queries.sm-up {
@@ -36,8 +36,8 @@
 
 @mixin grid-main-full {
   padding: spaces.$space-8;
-  grid-column: template-left / template-right;
-  grid-row: template-top / template-bottom;
+  grid-column: layout-left / layout-right;
+  grid-row: body-start / body-end;
   overflow-y: scroll;
 
   @include media-queries.sm-up {
