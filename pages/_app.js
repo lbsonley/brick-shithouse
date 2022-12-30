@@ -1,5 +1,5 @@
 import DefaultLayout from "../components/layout/default-layout";
-import "../styles/globals.scss";
+import "../styles/globals/index.scss";
 
 const MyApp = ({ Component, pageProps }) => {
   return (

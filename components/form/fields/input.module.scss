@@ -1,0 +1,11 @@
+@use "../../../styles/variables";
+
+.input {
+  padding: variables.$space-8;
+  border: 1px solid variables.$black;
+  border-radius: variables.$border-radius;
+}
+
+.label {
+  margin-right: variables.$space-16;
+}

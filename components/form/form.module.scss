@@ -1,7 +1,7 @@
-@use "../../styles/defaults";
+@use "../../styles/variables";
 
 .form {
   width: 100%;
-  max-width: defaults.$max-content-width-narrow;
+  max-width: variables.$max-content-width-narrow;
   margin: 0 auto;
 }

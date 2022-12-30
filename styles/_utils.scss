@@ -1,14 +1,12 @@
-@use "./spaces";
-@use "./colors";
-@use "./defaults";
+@use "./variables";
 
 @mixin block-link {
-  padding: spaces.$space-12 0;
+  padding: variables.$space-12 0;
   border-bottom: 2px solid transparent;
-  transition: border-bottom defaults.$transition;
+  transition: border-bottom variables.$transition;
 
   &:hover,
   &.isActive {
-    border-bottom-color: colors.$brand;
+    border-bottom-color: variables.$brand;
   }
 }

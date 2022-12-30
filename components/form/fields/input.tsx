@@ -1,5 +1,5 @@
-import { ChangeEvent, useState } from "react";
-import styles from "input.module.scss";
+import { useState } from "react";
+import styles from "./input.module.scss";
 
 interface InputProps {
   label?: string,
@@ -32,11 +32,13 @@ const Input = ({
   return (
     <>
       <label
+        className={styles.label}
         htmlFor={inputId}
       >
         {label}
       </label>
       <input
+        className={styles.input}
         required={required}
         name={name}
         type={type}

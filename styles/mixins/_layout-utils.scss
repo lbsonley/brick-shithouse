@@ -1,5 +1,4 @@
-@use "./spaces";
-@use "./defaults";
+@use "../variables";
 @use "./media-queries";
 
 @mixin flex-center {
@@ -14,27 +13,27 @@
 }
 
 @mixin grid-sidebar {
-  padding: spaces.$space-8;
+  padding: variables.$space-8;
   grid-column: layout-left / sidebar-end;
   grid-row: body-start / body-end;
 
   @include media-queries.sm-up {
-    padding: spaces.$space-16;
+    padding: variables.$space-16;
   }
 }
 
 @mixin grid-main {
-  padding: spaces.$space-8;
+  padding: variables.$space-8;
   grid-column: main-start / layout-right;
   grid-row: body-start / body-end;
   overflow-y: scroll;
 
   @include media-queries.sm-up {
-    padding: spaces.$space-16;
+    padding: variables.$space-16;
   }
 }
 
 @mixin content-max-width-narrow {
-  max-width: defaults.$max-content-width-narrow;
+  max-width: variables.$max-content-width-narrow;
   margin: 0 auto;
 }

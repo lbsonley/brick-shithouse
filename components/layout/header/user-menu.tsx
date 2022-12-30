@@ -42,7 +42,7 @@ const UserMenu = ({ user }: any) => {
             <Link
               className={
                 `${styles.userMenuLink}
-                ${currentRoute === "/profile" ? styles.isActive : ""}`
+                ${currentRoute?.includes("/profile") ? styles.isActive : ""}`
               }
               href={`/profile/${user.sub}`}
               onClick={() => handleUserMenuClick(!isMenuOpen)}

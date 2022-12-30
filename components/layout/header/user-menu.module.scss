@@ -1,6 +1,4 @@
-@use "../../../styles/colors";
-@use "../../../styles/spaces";
-@use "../../../styles/defaults";
+@use "../../../styles/variables";
 @use "../../../styles/utils";
 
 .userMenu {
@@ -13,10 +11,10 @@
   z-index: 10;
   width: 60px;
   height: 100%;
-  border: 1px solid colors.$brand;
-  border-radius: defaults.$border-radius;
-  background-color: colors.$brand;
-  color: colors.$white;
+  border: 1px solid variables.$brand;
+  border-radius: variables.$border-radius;
+  background-color: variables.$brand;
+  color: variables.$white;
 }
 
 .userMenuListContainer {
@@ -25,11 +23,11 @@
   top: 100%;
   right: 0;
   width: 200px;
-  padding: spaces.$space-12;
-  background-color: colors.$white;
-  box-shadow: defaults.$box-shadow-bottom;
+  padding: variables.$space-12;
+  background-color: variables.$white;
+  box-shadow: variables.$box-shadow-bottom;
   transform: translateX(205px);
-  transition: transform defaults.$transition;
+  transition: transform variables.$transition;
 }
 
 .userMenuBackground {
@@ -49,7 +47,7 @@
   .userMenuBackground {
     z-index: 1;
     display: block;
-    background: colors.$black-20;
+    background: variables.$black-20;
   }
 }
 

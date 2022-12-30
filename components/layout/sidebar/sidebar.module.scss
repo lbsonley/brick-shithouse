@@ -1,8 +1,8 @@
-@use "../../../styles/layout-utils";
-@use "../../../styles/defaults";
+@use "../../../styles/mixins/layout-utils";
+@use "../../../styles/variables";
 
 .sidebar {
   @include layout-utils.grid-sidebar;
 
-  box-shadow: defaults.$box-shadow-right;
+  box-shadow: variables.$box-shadow-right;
 }

@@ -1,4 +1,4 @@
-@use "../../../styles/layout-utils";
+@use "../../../styles/mixins/layout-utils";
 
 .main {
   @include layout-utils.grid-main;

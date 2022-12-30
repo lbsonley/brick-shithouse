@@ -1,14 +1,12 @@
-@use "../../../styles/layout-utils";
+@use "../../../styles/mixins/layout-utils";
 @use "../../../styles/utils";
-@use "../../../styles/spaces";
-@use "../../../styles/colors";
-@use "../../../styles/defaults";
+@use "../../../styles/variables";
 
 .header {
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
-  box-shadow: defaults.$box-shadow-bottom;
+  box-shadow: variables.$box-shadow-bottom;
 
   @include layout-utils.grid-header;
 }
@@ -16,7 +14,7 @@
 .headerBrand {
   @include layout-utils.flex-center;
 
-  min-width: spaces.$space-80;
+  min-width: variables.$space-80;
   flex: 0 1 auto;
 }
 
@@ -41,5 +39,5 @@
   @include layout-utils.flex-center;
   @include utils.block-link;
 
-  padding: spaces.$space-12;
+  padding: variables.$space-12;
 }
