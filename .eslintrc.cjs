@@ -10,6 +10,7 @@ module.exports = {
     "max-len": ["error", {
       code: 80,
     }],
+    "unicorn/consistent-function-scoping": "off",
     "unicorn/filename-case": [
       "error",
       {
