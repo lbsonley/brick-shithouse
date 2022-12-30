@@ -1,26 +1,54 @@
-import React from "react";
-import { ParsedUrlQuery } from "node:querystring";
-import { GetServerSideProps, NextPage } from "next";
+import React, { useState, useEffect } from "react";
+import { NextPage } from "next";
+import { useRouter } from "next/router";
 import {
   GetAthleteByIdDocument,
   GetAthleteByIdQuery,
-  UpdateAndPublishAthleteDocument,
+  PublishAthleteDocument,
+  UpdateAthleteDocument,
+  WeightUnit,
 } from "../../graphql/generated";
 import { request } from "../../lib/request";
 import Main from "../../components/layout/main/main";
 import Form from "../../components/form/form";
 import Input from "../../components/form/fields/input";
+import Select from "../../components/form/fields/select";
 import styles from "./profile.module.scss";
-import { useUser } from "@auth0/nextjs-auth0/client";
 
-interface ProfileProps {
-  result: GetAthleteByIdQuery
-};
-
-const Profile: NextPage<ProfileProps> = ({ result }) => {
+const Profile: NextPage = () => {
+  const router = useRouter();
+  const [result, setResult] = useState<GetAthleteByIdQuery>({});
   const { athlete } = result;
 
-  const stringToNumber = (string: FormDataEntryValue | null): number | null => {
+  useEffect(() => {
+    async function fetchAthlete () {
+      const result: GetAthleteByIdQuery = await request(
+        GetAthleteByIdDocument,
+        { auth0Id: router.query.userId },
+      );
+      setResult(result);
+
+    }
+
+    if (router.query.userId) {
+      fetchAthlete();
+    }
+  }, [router.query.userId]);
+
+  const enumToSelectOptionArray = (
+    enumToConvert: { [key: string]: string },
+  ) => {
+      return Object.values(enumToConvert).map((value) => {
+        return {
+          label: value.toUpperCase(),
+          value,
+        };
+      });
+  };
+
+  const formDataEntryValueToNumber = (
+    string: FormDataEntryValue | null,
+  ): number | null => {
     return string === null ? null : Number.parseInt(string as string);
   };
 
@@ -30,81 +58,73 @@ const Profile: NextPage<ProfileProps> = ({ result }) => {
     const queryData: {[key: string]: any} = {};
     const formData = new FormData(event.currentTarget);
 
+
     for (const [key, value] of formData.entries()) {
       queryData[key] = key === "height" || key === "weight"
-        ? stringToNumber(value)
-        : value;
+      ? formDataEntryValueToNumber(value)
+      : value;
     }
 
-    await request(UpdateAndPublishAthleteDocument, queryData);
+    await request(UpdateAthleteDocument, queryData);
+    await request(PublishAthleteDocument, { auth0Id: queryData.auth0Id });
 
   };
 
   return (
     <Main>
       <div className={styles.profile}>
-        <h2>Profile Main</h2>
-        <Form
-          handleFormSubmit={handleFormSubmit}
-        >
-          <Input
-            name="auth0Id"
-            type="hidden"
-            inputId="auth0Id"
-            initialValue={athlete?.auth0Id}
-          />
-          <Input
-            label="Username"
-            name="username"
-            inputId="username"
-            initialValue={athlete?.username}
-            required={true}
+        <h2 className="heading-3">Edit Profile</h2>
+        {athlete && (
+          <Form
+            handleFormSubmit={handleFormSubmit}
+          >
+            <Input
+              name="auth0Id"
+              type="hidden"
+              inputId="auth0Id"
+              initialValue={athlete?.auth0Id}
             />
-          <Input
-            label="Email"
-            type="email"
-            name="email"
-            inputId="email"
-            initialValue={athlete?.email}
-            required={true}
-          />
-          <Input
-            label="Height"
-            name="height"
-            inputId="height"
-            initialValue={athlete?.height || ""}
-          />
-          <Input
-            label="Weight"
-            name="weight"
-            inputId="weight"
-            initialValue={athlete?.weight || ""}
-          />
-        </Form>
+            <div className={`${styles.inputGrid}`}>
+              <Input
+                label="Username"
+                name="username"
+                inputId="username"
+                initialValue={athlete?.username}
+                required={true}
+              />
+              <Input
+                label="Email"
+                type="email"
+                name="email"
+                inputId="email"
+                initialValue={athlete?.email}
+                required={true}
+              />
+              <Input
+                label="Height"
+                name="height"
+                inputId="height"
+                initialValue={athlete?.height || ""}
+              />
+              <Input
+                label="Weight"
+                name="weight"
+                inputId="weight"
+                initialValue={athlete?.weight || ""}
+              />
+              <Select
+                inputId="preferredWeightUnit"
+                name="preferredWeightUnit"
+                options={enumToSelectOptionArray(WeightUnit)}
+                label="Preferred Weight Unit"
+                initialValue={athlete?.preferredWeightUnit || ""}
+              />
+            </div>
+          </Form>
+        )}
       </div>
     </Main>
   );
 };
-
-interface ProfileParams extends ParsedUrlQuery {
-  userId: string
-};
-
-export const getServerSideProps: GetServerSideProps<ProfileProps> =
-  async (context) => {
-    const { userId } = context.params as ProfileParams;
-    console.log(userId);
-
-    const result = await request(
-      GetAthleteByIdDocument,
-      { auth0Id: userId },
-    );
-
-    return {
-      props: {
-        result,
-      },
-    };
-  };
 
 export default Profile;

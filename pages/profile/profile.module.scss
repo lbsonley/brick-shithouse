@@ -1,5 +1,12 @@
 @use "../../styles/mixins/layout-utils";
+@use "../../styles/variables";
 
 .profile {
   @include layout-utils.content-max-width-narrow;
+}
+
+.inputGrid {
+  display: grid;
+  grid-gap: variables.$space-16;
+  grid-template-columns: max-content max-content;
 }

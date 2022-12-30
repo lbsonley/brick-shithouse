@@ -6,12 +6,13 @@ query getAthleteById($auth0Id: String!) {
     email
     weight
     height
+    preferredWeightUnit
   }
 }
 
-mutation updateAndPublishAthlete($auth0Id: String!, $email: String!, $username: String!, $height: Int, $weight: Int) {
+mutation updateAthlete($auth0Id: String!, $email: String!, $username: String!, $height: Int, $weight: Int, $preferredWeightUnit: WeightUnit) {
   updateAthlete(
-    data: {auth0Id: $auth0Id, email: $email, username: $username, height: $height, weight: $weight}
+    data: {auth0Id: $auth0Id, email: $email, username: $username, height: $height, weight: $weight, preferredWeightUnit: $preferredWeightUnit}
     where: {auth0Id: $auth0Id}
   ) {
     auth0Id
@@ -19,7 +20,11 @@ mutation updateAndPublishAthlete($auth0Id: String!, $email: String!, $username: 
     username
     height
     weight
+    preferredWeightUnit
   }
+}
+
+mutation publishAthlete($auth0Id: String!) {
   publishAthlete(where: {auth0Id: $auth0Id}, to: PUBLISHED) {
     auth0Id
     email
