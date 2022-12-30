@@ -1,3 +1,4 @@
+/* https://www.datocms.com/blog/how-to-generate-typescript-types-from-graphql */
 import { request as graphqlRequest, Variables } from "graphql-request";
 import { RequestDocument } from "graphql-request/dist/types";
 import { TypedDocumentNode } from "@graphql-typed-document-node/core";
@@ -10,11 +11,11 @@ export function request<TDocument = any>(
 
   headers.append(
     "Authorization",
-    process.env.DATOCMS_FULL_ACCESS_API_TOKEN as string,
+    process.env.NEXT_PUBLIC_HYGRAPH_API_TOKEN as string,
   );
 
   return graphqlRequest<TDocument, Variables>(
-    "https://graphql.datocms.com/",
+    process.env.NEXT_PUBLIC_HYGRAPH_API_ENDPOINT as string,
     document,
     variables,
     headers,

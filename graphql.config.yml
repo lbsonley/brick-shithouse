@@ -1,23 +1,11 @@
 schema:
-  - https://graphql.datocms.com:
+  - ${NEXT_PUBLIC_HYGRAPH_API_ENDPOINT}:
       headers:
-        Authorization: ${DATOCMS_FULL_ACCESS_API_TOKEN}
+        Authorization: ${NEXT_PUBLIC_HYGRAPH_API_TOKEN}
 documents: './graphql/**/*.graphql'
 generates:
   graphql/generated.ts:
     plugins:
       - typescript
-      - typescript-operations:
-          strictScalars: true
-          scalars:
-            BooleanType: boolean
-            CustomData: Record<string, unknown>
-            Date: string
-            DateTime: string
-            FloatType: number
-            IntType: number
-            ItemId: string
-            JsonField: unkown
-            MetaTagAttributes: Record<string, string>
-            UploadId: string
+      - typescript-operations
       - typed-document-node
