@@ -1,0 +1,18 @@
+@use "../../../styles/variables";
+
+.button {
+  padding: variables.$space-12 variables.$space-16;
+  border: 2px solid variables.$brand;
+  border-radius: variables.$border-radius;
+  font-size: variables.$font-size-base;
+}
+
+.primary {
+  background-color: variables.$brand;
+  color: variables.$white;
+}
+
+.outline {
+  background-color: variables.$white;
+  color: variables.$brand;
+}

@@ -13,6 +13,7 @@ import Main from "../../components/layout/main/main";
 import Form from "../../components/form/form";
 import Input from "../../components/form/fields/input";
 import Select from "../../components/form/fields/select";
+import Button from "../../components/base/button/button";
 import styles from "./profile.module.scss";
 
 const Profile: NextPage = () => {
@@ -119,6 +120,13 @@ const Profile: NextPage = () => {
                 label="Preferred Weight Unit"
                 initialValue={athlete?.preferredWeightUnit || ""}
               />
+
+              <Button
+                type="submit"
+                variant="primary"
+              >
+                Submit
+              </Button>
             </div>
           </Form>
         )}

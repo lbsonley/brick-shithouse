@@ -13,7 +13,6 @@ const Form = ({ children, handleFormSubmit }: FormProps) => {
       onSubmit={handleFormSubmit}
     >
       {children}
-      <button type="submit">Submit</button>
     </form>
   );
 };
