@@ -1,3 +1,4 @@
+/* https://amanhimself.dev/blog/setup-nextjs-project-with-eslint-prettier-husky-lint-staged/ */
 const path = require('path')
 
 const buildEslintCommand = (filenames) =>
@@ -6,5 +7,6 @@ const buildEslintCommand = (filenames) =>
     .join(' --file ')}`
 
 module.exports = {
+  '**/*.(ts|tsx)': () => 'yarn tsc --noEmit',
   '*.{js,jsx,ts,tsx}': [buildEslintCommand],
 }
