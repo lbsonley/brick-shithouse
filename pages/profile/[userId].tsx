@@ -47,6 +47,9 @@ const Profile: NextPage = () => {
       });
   };
 
+  const options = enumToSelectOptionArray(WeightUnit);
+  options.unshift({ label: "-- Select a Weight Unit --", value: "" });
+
   const formDataEntryValueToNumber = (
     string: FormDataEntryValue | null,
   ): number | null => {
@@ -116,7 +119,7 @@ const Profile: NextPage = () => {
               <Select
                 inputId="preferredWeightUnit"
                 name="preferredWeightUnit"
-                options={enumToSelectOptionArray(WeightUnit)}
+                options={options}
                 label="Preferred Weight Unit"
                 initialValue={athlete?.preferredWeightUnit || ""}
               />

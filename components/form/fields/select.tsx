@@ -29,7 +29,6 @@ const Select = ({
         id={inputId}
         defaultValue={initialValue || ""}
       >
-        <option value="">-- Select a Weight Unit --</option>
         {options.map(({ label, value }) => (
           <option
             key={value}
