@@ -34,14 +34,15 @@ const Header = () => {
                 </Link>
               </li>
               <li className={styles.headerNavListItem}>
-                <span className={styles.headerNavLink}>
-                  Routines
-                </span>
-              </li>
-              <li className={styles.headerNavListItem}>
-                <span className={styles.headerNavLink}>
+                <Link
+                  href="/workouts"
+                  className={`
+                    ${styles.headerNavLink}
+                    ${currentRoute === "/workouts" ? styles.isActive : ""}
+                  `}
+                >
                   Workouts
-                </span>
+                </Link>
               </li>
               <li className={styles.headerNavListItem}>
                 <span className={styles.headerNavLink}>
