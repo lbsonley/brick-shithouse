@@ -1,0 +1,15 @@
+query getExercises($first: Int!, $skip: Int!, $where: ExerciseWhereInput) {
+  exercises(
+    first: $first
+    skip: $skip
+    where: $where
+  ) {
+    id
+    name
+    primaryMuscleGroup
+    secondaryMuscleGroups
+    difficulty
+    isBodyweight
+    isUnilateral
+  }
+}
