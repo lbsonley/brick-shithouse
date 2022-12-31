@@ -37,7 +37,7 @@ const UserMenu = ({ user }: any) => {
       </button>
 
       <div className={styles.userMenuListContainer}>
-        <ul className={styles.userMenuList}>
+        <ul>
           <li className={styles.userMenuListItem}>
             <Link
               className={

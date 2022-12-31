@@ -50,3 +50,7 @@ h5 {
 .heading-5 { @include typography.heading-5; }
 
 @include grid.make-grid-classes;
+
+ul {
+  list-style: none;
+}
