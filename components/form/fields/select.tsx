@@ -1,3 +1,5 @@
+import styles from "./input.module.scss";
+
 interface SelectProps {
   options: { label: string, value: string }[];
   label: string;
@@ -15,8 +17,18 @@ const Select = ({
 }: SelectProps) => {
   return (
     <>
-      <label htmlFor={inputId}>{label}</label>
-      <select name={name} id={inputId} defaultValue={initialValue || ""}>
+      <label
+        className={styles.label}
+        htmlFor={inputId}
+      >
+        {label}
+      </label>
+      <select
+        className={styles.select}
+        name={name}
+        id={inputId}
+        defaultValue={initialValue || ""}
+      >
         <option value="">-- Select a Weight Unit --</option>
         {options.map(({ label, value }) => (
           <option
