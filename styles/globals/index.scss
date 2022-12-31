@@ -1,5 +1,6 @@
-@use "../mixins/typography";
+@use "../variables";
 @use "../mixins/grid";
+@use "../mixins/typography";
 
 * {
   box-sizing: border-box;
@@ -20,8 +21,8 @@ body {
 body {
   color: rgb(var(--foreground-rgb));
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  font-weight: typography.$font-weight-base;
-  line-height: typography.$line-height-base;
+  font-weight: variables.$font-weight-base;
+  line-height: variables.$line-height-base;
 }
 
 a {

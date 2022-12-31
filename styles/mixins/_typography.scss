@@ -1,9 +1,7 @@
 // https://type-scale.com/
 // Perfect Fourth
 
-$font-size-base: 16px;
-$font-weight-base: 400;
-$line-height-base: 1.75;
+@use "../variables";
 
 @mixin heading-base {
   font-weight: 400;
