@@ -17,7 +17,7 @@ import Button from "../../components/base/button/button";
 import styles from "./profile.module.scss";
 
 const Profile: NextPage = () => {
-  const router = useRouter();
+  const { query } = useRouter();
   const [result, setResult] = useState<GetAthleteByIdQuery>({});
   const { athlete } = result;
 
@@ -25,16 +25,16 @@ const Profile: NextPage = () => {
     async function fetchAthlete () {
       const result: GetAthleteByIdQuery = await request(
         GetAthleteByIdDocument,
-        { auth0Id: router.query.userId },
+        { auth0Id: query.userId },
       );
       setResult(result);
 
     }
 
-    if (router.query.userId) {
+    if (query.userId) {
       fetchAthlete();
     }
-  }, [router.query.userId]);
+  }, [query.userId]);
 
   const enumToSelectOptionArray = (
     enumToConvert: { [key: string]: string },
