@@ -698,6 +698,7 @@ export type Athlete = Node & {
   history: Array<Version>;
   /** The unique identifier */
   id: Scalars['ID'];
+  loggedWorkouts: Array<LoggedWorkout>;
   preferredWeightUnit?: Maybe<WeightUnit>;
   /** The time the document was published. Null on documents in draft stage. */
   publishedAt?: Maybe<Scalars['DateTime']>;
@@ -712,6 +713,7 @@ export type Athlete = Node & {
   updatedBy?: Maybe<User>;
   username: Scalars['String'];
   weight?: Maybe<Scalars['Int']>;
+  workouts: Array<Workout>;
 };
 
 
@@ -732,6 +734,19 @@ export type AthleteHistoryArgs = {
   limit?: Scalars['Int'];
   skip?: Scalars['Int'];
   stageOverride?: InputMaybe<Stage>;
+};
+
+
+export type AthleteLoggedWorkoutsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  forceParentLocale?: InputMaybe<Scalars['Boolean']>;
+  last?: InputMaybe<Scalars['Int']>;
+  locales?: InputMaybe<Array<Locale>>;
+  orderBy?: InputMaybe<LoggedWorkoutOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<LoggedWorkoutWhereInput>;
 };
 
 
@@ -758,6 +773,19 @@ export type AthleteUpdatedByArgs = {
   locales?: InputMaybe<Array<Locale>>;
 };
 
+
+export type AthleteWorkoutsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  forceParentLocale?: InputMaybe<Scalars['Boolean']>;
+  last?: InputMaybe<Scalars['Int']>;
+  locales?: InputMaybe<Array<Locale>>;
+  orderBy?: InputMaybe<WorkoutOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<WorkoutWhereInput>;
+};
+
 export type AthleteConnectInput = {
   /** Allow to specify document position in list of connected documents, will default to appending at end of list */
   position?: InputMaybe<ConnectPositionInput>;
@@ -780,10 +808,12 @@ export type AthleteCreateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']>;
   email: Scalars['String'];
   height?: InputMaybe<Scalars['Int']>;
+  loggedWorkouts?: InputMaybe<LoggedWorkoutCreateManyInlineInput>;
   preferredWeightUnit?: InputMaybe<WeightUnit>;
   updatedAt?: InputMaybe<Scalars['DateTime']>;
   username: Scalars['String'];
   weight?: InputMaybe<Scalars['Int']>;
+  workouts?: InputMaybe<WorkoutCreateManyInlineInput>;
 };
 
 export type AthleteCreateManyInlineInput = {
@@ -910,6 +940,9 @@ export type AthleteManyWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']>;
+  loggedWorkouts_every?: InputMaybe<LoggedWorkoutWhereInput>;
+  loggedWorkouts_none?: InputMaybe<LoggedWorkoutWhereInput>;
+  loggedWorkouts_some?: InputMaybe<LoggedWorkoutWhereInput>;
   preferredWeightUnit?: InputMaybe<WeightUnit>;
   /** All values that are contained in given list. */
   preferredWeightUnit_in?: InputMaybe<Array<InputMaybe<WeightUnit>>>;
@@ -986,6 +1019,9 @@ export type AthleteManyWhereInput = {
   weight_not?: InputMaybe<Scalars['Int']>;
   /** All values that are not contained in given list. */
   weight_not_in?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  workouts_every?: InputMaybe<WorkoutWhereInput>;
+  workouts_none?: InputMaybe<WorkoutWhereInput>;
+  workouts_some?: InputMaybe<WorkoutWhereInput>;
 };
 
 export enum AthleteOrderByInput {
@@ -1015,9 +1051,11 @@ export type AthleteUpdateInput = {
   auth0Id?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
   height?: InputMaybe<Scalars['Int']>;
+  loggedWorkouts?: InputMaybe<LoggedWorkoutUpdateManyInlineInput>;
   preferredWeightUnit?: InputMaybe<WeightUnit>;
   username?: InputMaybe<Scalars['String']>;
   weight?: InputMaybe<Scalars['Int']>;
+  workouts?: InputMaybe<WorkoutUpdateManyInlineInput>;
 };
 
 export type AthleteUpdateManyInlineInput = {
@@ -1194,6 +1232,9 @@ export type AthleteWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']>;
+  loggedWorkouts_every?: InputMaybe<LoggedWorkoutWhereInput>;
+  loggedWorkouts_none?: InputMaybe<LoggedWorkoutWhereInput>;
+  loggedWorkouts_some?: InputMaybe<LoggedWorkoutWhereInput>;
   preferredWeightUnit?: InputMaybe<WeightUnit>;
   /** All values that are contained in given list. */
   preferredWeightUnit_in?: InputMaybe<Array<InputMaybe<WeightUnit>>>;
@@ -1270,6 +1311,9 @@ export type AthleteWhereInput = {
   weight_not?: InputMaybe<Scalars['Int']>;
   /** All values that are not contained in given list. */
   weight_not_in?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  workouts_every?: InputMaybe<WorkoutWhereInput>;
+  workouts_none?: InputMaybe<WorkoutWhereInput>;
+  workouts_some?: InputMaybe<WorkoutWhereInput>;
 };
 
 /** The document in stages filter allows specifying a stage entry to cross compare the same document between different stages */
@@ -1930,6 +1974,7 @@ export type Exercise = Node & {
   publishedBy?: Maybe<User>;
   scheduledIn: Array<ScheduledOperation>;
   secondaryMuscleGroups: Array<MuscleGroup>;
+  slug?: Maybe<Scalars['String']>;
   /** System stage field */
   stage: Stage;
   /** The time the document was updated */
@@ -2059,6 +2104,7 @@ export type ExerciseCreateInput = {
   name: Scalars['String'];
   primaryMuscleGroup?: InputMaybe<MuscleGroup>;
   secondaryMuscleGroups?: InputMaybe<Array<MuscleGroup>>;
+  slug?: InputMaybe<Scalars['String']>;
   updatedAt?: InputMaybe<Scalars['DateTime']>;
   workouts?: InputMaybe<WorkoutCreateManyInlineInput>;
 };
@@ -2203,6 +2249,25 @@ export type ExerciseManyWhereInput = {
   secondaryMuscleGroups_contains_some?: InputMaybe<Array<MuscleGroup>>;
   /** Matches if the field array does not contains *all* items provided to the filter or order does not match */
   secondaryMuscleGroups_not?: InputMaybe<Array<MuscleGroup>>;
+  slug?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  slug_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  slug_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  slug_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values that are not equal to given value. */
+  slug_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  slug_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  slug_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  slug_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values not starting with the given string. */
+  slug_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  slug_starts_with?: InputMaybe<Scalars['String']>;
   updatedAt?: InputMaybe<Scalars['DateTime']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']>;
@@ -2243,6 +2308,8 @@ export enum ExerciseOrderByInput {
   PublishedAtDesc = 'publishedAt_DESC',
   SecondaryMuscleGroupsAsc = 'secondaryMuscleGroups_ASC',
   SecondaryMuscleGroupsDesc = 'secondaryMuscleGroups_DESC',
+  SlugAsc = 'slug_ASC',
+  SlugDesc = 'slug_DESC',
   UpdatedAtAsc = 'updatedAt_ASC',
   UpdatedAtDesc = 'updatedAt_DESC'
 }
@@ -2258,6 +2325,7 @@ export type ExerciseUpdateInput = {
   name?: InputMaybe<Scalars['String']>;
   primaryMuscleGroup?: InputMaybe<MuscleGroup>;
   secondaryMuscleGroups?: InputMaybe<Array<MuscleGroup>>;
+  slug?: InputMaybe<Scalars['String']>;
   workouts?: InputMaybe<WorkoutUpdateManyInlineInput>;
 };
 
@@ -2479,6 +2547,25 @@ export type ExerciseWhereInput = {
   secondaryMuscleGroups_contains_some?: InputMaybe<Array<MuscleGroup>>;
   /** Matches if the field array does not contains *all* items provided to the filter or order does not match */
   secondaryMuscleGroups_not?: InputMaybe<Array<MuscleGroup>>;
+  slug?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  slug_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  slug_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  slug_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values that are not equal to given value. */
+  slug_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  slug_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  slug_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  slug_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values not starting with the given string. */
+  slug_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  slug_starts_with?: InputMaybe<Scalars['String']>;
   updatedAt?: InputMaybe<Scalars['DateTime']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']>;
@@ -2517,6 +2604,7 @@ export type ExerciseWhereStageInput = {
 /** References Exercise record uniquely */
 export type ExerciseWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']>;
+  slug?: InputMaybe<Scalars['String']>;
 };
 
 export enum ImageFit {
@@ -2572,6 +2660,454 @@ export type LocationInput = {
   longitude: Scalars['Float'];
 };
 
+export type LoggedWorkout = Node & {
+  __typename?: 'LoggedWorkout';
+  athlete?: Maybe<Athlete>;
+  /** The time the document was created */
+  createdAt: Scalars['DateTime'];
+  /** User that created this document */
+  createdBy?: Maybe<User>;
+  date: Scalars['Date'];
+  /** Get the document in other stages */
+  documentInStages: Array<LoggedWorkout>;
+  /** List of LoggedWorkout versions */
+  history: Array<Version>;
+  /** The unique identifier */
+  id: Scalars['ID'];
+  /** The time the document was published. Null on documents in draft stage. */
+  publishedAt?: Maybe<Scalars['DateTime']>;
+  /** User that last published this document */
+  publishedBy?: Maybe<User>;
+  scheduledIn: Array<ScheduledOperation>;
+  sets: Array<Scalars['Json']>;
+  /** System stage field */
+  stage: Stage;
+  /** The time the document was updated */
+  updatedAt: Scalars['DateTime'];
+  /** User that last updated this document */
+  updatedBy?: Maybe<User>;
+  workout?: Maybe<Workout>;
+};
+
+
+export type LoggedWorkoutAthleteArgs = {
+  forceParentLocale?: InputMaybe<Scalars['Boolean']>;
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+
+export type LoggedWorkoutCreatedByArgs = {
+  forceParentLocale?: InputMaybe<Scalars['Boolean']>;
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+
+export type LoggedWorkoutDocumentInStagesArgs = {
+  includeCurrent?: Scalars['Boolean'];
+  inheritLocale?: Scalars['Boolean'];
+  stages?: Array<Stage>;
+};
+
+
+export type LoggedWorkoutHistoryArgs = {
+  limit?: Scalars['Int'];
+  skip?: Scalars['Int'];
+  stageOverride?: InputMaybe<Stage>;
+};
+
+
+export type LoggedWorkoutPublishedByArgs = {
+  forceParentLocale?: InputMaybe<Scalars['Boolean']>;
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+
+export type LoggedWorkoutScheduledInArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  forceParentLocale?: InputMaybe<Scalars['Boolean']>;
+  last?: InputMaybe<Scalars['Int']>;
+  locales?: InputMaybe<Array<Locale>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<ScheduledOperationWhereInput>;
+};
+
+
+export type LoggedWorkoutUpdatedByArgs = {
+  forceParentLocale?: InputMaybe<Scalars['Boolean']>;
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+
+export type LoggedWorkoutWorkoutArgs = {
+  forceParentLocale?: InputMaybe<Scalars['Boolean']>;
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+export type LoggedWorkoutConnectInput = {
+  /** Allow to specify document position in list of connected documents, will default to appending at end of list */
+  position?: InputMaybe<ConnectPositionInput>;
+  /** Document to connect */
+  where: LoggedWorkoutWhereUniqueInput;
+};
+
+/** A connection to a list of items. */
+export type LoggedWorkoutConnection = {
+  __typename?: 'LoggedWorkoutConnection';
+  aggregate: Aggregate;
+  /** A list of edges. */
+  edges: Array<LoggedWorkoutEdge>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+export type LoggedWorkoutCreateInput = {
+  athlete?: InputMaybe<AthleteCreateOneInlineInput>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  date: Scalars['Date'];
+  sets: Array<Scalars['Json']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']>;
+  workout?: InputMaybe<WorkoutCreateOneInlineInput>;
+};
+
+export type LoggedWorkoutCreateManyInlineInput = {
+  /** Connect multiple existing LoggedWorkout documents */
+  connect?: InputMaybe<Array<LoggedWorkoutWhereUniqueInput>>;
+  /** Create and connect multiple existing LoggedWorkout documents */
+  create?: InputMaybe<Array<LoggedWorkoutCreateInput>>;
+};
+
+export type LoggedWorkoutCreateOneInlineInput = {
+  /** Connect one existing LoggedWorkout document */
+  connect?: InputMaybe<LoggedWorkoutWhereUniqueInput>;
+  /** Create and connect one LoggedWorkout document */
+  create?: InputMaybe<LoggedWorkoutCreateInput>;
+};
+
+/** An edge in a connection. */
+export type LoggedWorkoutEdge = {
+  __typename?: 'LoggedWorkoutEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String'];
+  /** The item at the end of the edge. */
+  node: LoggedWorkout;
+};
+
+/** Identifies documents */
+export type LoggedWorkoutManyWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<LoggedWorkoutWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<LoggedWorkoutWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<LoggedWorkoutWhereInput>>;
+  /** Contains search across all appropriate fields. */
+  _search?: InputMaybe<Scalars['String']>;
+  athlete?: InputMaybe<AthleteWhereInput>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  createdAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  createdAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  createdAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  /** All values less than the given value. */
+  createdAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  createdAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  createdAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  createdBy?: InputMaybe<UserWhereInput>;
+  date?: InputMaybe<Scalars['Date']>;
+  /** All values greater than the given value. */
+  date_gt?: InputMaybe<Scalars['Date']>;
+  /** All values greater than or equal the given value. */
+  date_gte?: InputMaybe<Scalars['Date']>;
+  /** All values that are contained in given list. */
+  date_in?: InputMaybe<Array<InputMaybe<Scalars['Date']>>>;
+  /** All values less than the given value. */
+  date_lt?: InputMaybe<Scalars['Date']>;
+  /** All values less than or equal the given value. */
+  date_lte?: InputMaybe<Scalars['Date']>;
+  /** All values that are not equal to given value. */
+  date_not?: InputMaybe<Scalars['Date']>;
+  /** All values that are not contained in given list. */
+  date_not_in?: InputMaybe<Array<InputMaybe<Scalars['Date']>>>;
+  documentInStages_every?: InputMaybe<LoggedWorkoutWhereStageInput>;
+  documentInStages_none?: InputMaybe<LoggedWorkoutWhereStageInput>;
+  documentInStages_some?: InputMaybe<LoggedWorkoutWhereStageInput>;
+  id?: InputMaybe<Scalars['ID']>;
+  /** All values containing the given string. */
+  id_contains?: InputMaybe<Scalars['ID']>;
+  /** All values ending with the given string. */
+  id_ends_with?: InputMaybe<Scalars['ID']>;
+  /** All values that are contained in given list. */
+  id_in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** All values that are not equal to given value. */
+  id_not?: InputMaybe<Scalars['ID']>;
+  /** All values not containing the given string. */
+  id_not_contains?: InputMaybe<Scalars['ID']>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: InputMaybe<Scalars['ID']>;
+  /** All values that are not contained in given list. */
+  id_not_in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: InputMaybe<Scalars['ID']>;
+  /** All values starting with the given string. */
+  id_starts_with?: InputMaybe<Scalars['ID']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  publishedAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  publishedAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  publishedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  /** All values less than the given value. */
+  publishedAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  publishedAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  publishedAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  publishedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  publishedBy?: InputMaybe<UserWhereInput>;
+  scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  updatedAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  updatedAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  updatedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  /** All values less than the given value. */
+  updatedAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  updatedAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  updatedBy?: InputMaybe<UserWhereInput>;
+  workout?: InputMaybe<WorkoutWhereInput>;
+};
+
+export enum LoggedWorkoutOrderByInput {
+  CreatedAtAsc = 'createdAt_ASC',
+  CreatedAtDesc = 'createdAt_DESC',
+  DateAsc = 'date_ASC',
+  DateDesc = 'date_DESC',
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  PublishedAtAsc = 'publishedAt_ASC',
+  PublishedAtDesc = 'publishedAt_DESC',
+  UpdatedAtAsc = 'updatedAt_ASC',
+  UpdatedAtDesc = 'updatedAt_DESC'
+}
+
+export type LoggedWorkoutUpdateInput = {
+  athlete?: InputMaybe<AthleteUpdateOneInlineInput>;
+  date?: InputMaybe<Scalars['Date']>;
+  sets?: InputMaybe<Array<Scalars['Json']>>;
+  workout?: InputMaybe<WorkoutUpdateOneInlineInput>;
+};
+
+export type LoggedWorkoutUpdateManyInlineInput = {
+  /** Connect multiple existing LoggedWorkout documents */
+  connect?: InputMaybe<Array<LoggedWorkoutConnectInput>>;
+  /** Create and connect multiple LoggedWorkout documents */
+  create?: InputMaybe<Array<LoggedWorkoutCreateInput>>;
+  /** Delete multiple LoggedWorkout documents */
+  delete?: InputMaybe<Array<LoggedWorkoutWhereUniqueInput>>;
+  /** Disconnect multiple LoggedWorkout documents */
+  disconnect?: InputMaybe<Array<LoggedWorkoutWhereUniqueInput>>;
+  /** Override currently-connected documents with multiple existing LoggedWorkout documents */
+  set?: InputMaybe<Array<LoggedWorkoutWhereUniqueInput>>;
+  /** Update multiple LoggedWorkout documents */
+  update?: InputMaybe<Array<LoggedWorkoutUpdateWithNestedWhereUniqueInput>>;
+  /** Upsert multiple LoggedWorkout documents */
+  upsert?: InputMaybe<Array<LoggedWorkoutUpsertWithNestedWhereUniqueInput>>;
+};
+
+export type LoggedWorkoutUpdateManyInput = {
+  date?: InputMaybe<Scalars['Date']>;
+  sets?: InputMaybe<Array<Scalars['Json']>>;
+};
+
+export type LoggedWorkoutUpdateManyWithNestedWhereInput = {
+  /** Update many input */
+  data: LoggedWorkoutUpdateManyInput;
+  /** Document search */
+  where: LoggedWorkoutWhereInput;
+};
+
+export type LoggedWorkoutUpdateOneInlineInput = {
+  /** Connect existing LoggedWorkout document */
+  connect?: InputMaybe<LoggedWorkoutWhereUniqueInput>;
+  /** Create and connect one LoggedWorkout document */
+  create?: InputMaybe<LoggedWorkoutCreateInput>;
+  /** Delete currently connected LoggedWorkout document */
+  delete?: InputMaybe<Scalars['Boolean']>;
+  /** Disconnect currently connected LoggedWorkout document */
+  disconnect?: InputMaybe<Scalars['Boolean']>;
+  /** Update single LoggedWorkout document */
+  update?: InputMaybe<LoggedWorkoutUpdateWithNestedWhereUniqueInput>;
+  /** Upsert single LoggedWorkout document */
+  upsert?: InputMaybe<LoggedWorkoutUpsertWithNestedWhereUniqueInput>;
+};
+
+export type LoggedWorkoutUpdateWithNestedWhereUniqueInput = {
+  /** Document to update */
+  data: LoggedWorkoutUpdateInput;
+  /** Unique document search */
+  where: LoggedWorkoutWhereUniqueInput;
+};
+
+export type LoggedWorkoutUpsertInput = {
+  /** Create document if it didn't exist */
+  create: LoggedWorkoutCreateInput;
+  /** Update document if it exists */
+  update: LoggedWorkoutUpdateInput;
+};
+
+export type LoggedWorkoutUpsertWithNestedWhereUniqueInput = {
+  /** Upsert data */
+  data: LoggedWorkoutUpsertInput;
+  /** Unique document search */
+  where: LoggedWorkoutWhereUniqueInput;
+};
+
+/** This contains a set of filters that can be used to compare values internally */
+export type LoggedWorkoutWhereComparatorInput = {
+  /** This field can be used to request to check if the entry is outdated by internal comparison */
+  outdated_to?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Identifies documents */
+export type LoggedWorkoutWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<LoggedWorkoutWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<LoggedWorkoutWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<LoggedWorkoutWhereInput>>;
+  /** Contains search across all appropriate fields. */
+  _search?: InputMaybe<Scalars['String']>;
+  athlete?: InputMaybe<AthleteWhereInput>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  createdAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  createdAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  createdAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  /** All values less than the given value. */
+  createdAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  createdAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  createdAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  createdBy?: InputMaybe<UserWhereInput>;
+  date?: InputMaybe<Scalars['Date']>;
+  /** All values greater than the given value. */
+  date_gt?: InputMaybe<Scalars['Date']>;
+  /** All values greater than or equal the given value. */
+  date_gte?: InputMaybe<Scalars['Date']>;
+  /** All values that are contained in given list. */
+  date_in?: InputMaybe<Array<InputMaybe<Scalars['Date']>>>;
+  /** All values less than the given value. */
+  date_lt?: InputMaybe<Scalars['Date']>;
+  /** All values less than or equal the given value. */
+  date_lte?: InputMaybe<Scalars['Date']>;
+  /** All values that are not equal to given value. */
+  date_not?: InputMaybe<Scalars['Date']>;
+  /** All values that are not contained in given list. */
+  date_not_in?: InputMaybe<Array<InputMaybe<Scalars['Date']>>>;
+  documentInStages_every?: InputMaybe<LoggedWorkoutWhereStageInput>;
+  documentInStages_none?: InputMaybe<LoggedWorkoutWhereStageInput>;
+  documentInStages_some?: InputMaybe<LoggedWorkoutWhereStageInput>;
+  id?: InputMaybe<Scalars['ID']>;
+  /** All values containing the given string. */
+  id_contains?: InputMaybe<Scalars['ID']>;
+  /** All values ending with the given string. */
+  id_ends_with?: InputMaybe<Scalars['ID']>;
+  /** All values that are contained in given list. */
+  id_in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** All values that are not equal to given value. */
+  id_not?: InputMaybe<Scalars['ID']>;
+  /** All values not containing the given string. */
+  id_not_contains?: InputMaybe<Scalars['ID']>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: InputMaybe<Scalars['ID']>;
+  /** All values that are not contained in given list. */
+  id_not_in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: InputMaybe<Scalars['ID']>;
+  /** All values starting with the given string. */
+  id_starts_with?: InputMaybe<Scalars['ID']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  publishedAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  publishedAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  publishedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  /** All values less than the given value. */
+  publishedAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  publishedAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  publishedAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  publishedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  publishedBy?: InputMaybe<UserWhereInput>;
+  scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  updatedAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  updatedAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  updatedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  /** All values less than the given value. */
+  updatedAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  updatedAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  updatedBy?: InputMaybe<UserWhereInput>;
+  workout?: InputMaybe<WorkoutWhereInput>;
+};
+
+/** The document in stages filter allows specifying a stage entry to cross compare the same document between different stages */
+export type LoggedWorkoutWhereStageInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<LoggedWorkoutWhereStageInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<LoggedWorkoutWhereStageInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<LoggedWorkoutWhereStageInput>>;
+  /** This field contains fields which can be set as true or false to specify an internal comparison */
+  compareWithParent?: InputMaybe<LoggedWorkoutWhereComparatorInput>;
+  /** Specify the stage to compare with */
+  stage?: InputMaybe<Stage>;
+};
+
+/** References LoggedWorkout record uniquely */
+export type LoggedWorkoutWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']>;
+};
+
 export enum MuscleGroup {
   Abs = 'Abs',
   Back = 'Back',
@@ -2595,6 +3131,8 @@ export type Mutation = {
   createEquipment?: Maybe<Equipment>;
   /** Create one exercise */
   createExercise?: Maybe<Exercise>;
+  /** Create one loggedWorkout */
+  createLoggedWorkout?: Maybe<LoggedWorkout>;
   /** Create one scheduledRelease */
   createScheduledRelease?: Maybe<ScheduledRelease>;
   /** Create one workout */
@@ -2607,6 +3145,8 @@ export type Mutation = {
   deleteEquipment?: Maybe<Equipment>;
   /** Delete one exercise from _all_ existing stages. Returns deleted document. */
   deleteExercise?: Maybe<Exercise>;
+  /** Delete one loggedWorkout from _all_ existing stages. Returns deleted document. */
+  deleteLoggedWorkout?: Maybe<LoggedWorkout>;
   /**
    * Delete many Asset documents
    * @deprecated Please use the new paginated many mutation (deleteManyAssetsConnection)
@@ -2636,6 +3176,13 @@ export type Mutation = {
   /** Delete many Exercise documents, return deleted documents */
   deleteManyExercisesConnection: ExerciseConnection;
   /**
+   * Delete many LoggedWorkout documents
+   * @deprecated Please use the new paginated many mutation (deleteManyLoggedWorkoutsConnection)
+   */
+  deleteManyLoggedWorkouts: BatchPayload;
+  /** Delete many LoggedWorkout documents, return deleted documents */
+  deleteManyLoggedWorkoutsConnection: LoggedWorkoutConnection;
+  /**
    * Delete many Workout documents
    * @deprecated Please use the new paginated many mutation (deleteManyWorkoutsConnection)
    */
@@ -2656,6 +3203,8 @@ export type Mutation = {
   publishEquipment?: Maybe<Equipment>;
   /** Publish one exercise */
   publishExercise?: Maybe<Exercise>;
+  /** Publish one loggedWorkout */
+  publishLoggedWorkout?: Maybe<LoggedWorkout>;
   /**
    * Publish many Asset documents
    * @deprecated Please use the new paginated many mutation (publishManyAssetsConnection)
@@ -2685,6 +3234,13 @@ export type Mutation = {
   /** Publish many Exercise documents */
   publishManyExercisesConnection: ExerciseConnection;
   /**
+   * Publish many LoggedWorkout documents
+   * @deprecated Please use the new paginated many mutation (publishManyLoggedWorkoutsConnection)
+   */
+  publishManyLoggedWorkouts: BatchPayload;
+  /** Publish many LoggedWorkout documents */
+  publishManyLoggedWorkoutsConnection: LoggedWorkoutConnection;
+  /**
    * Publish many Workout documents
    * @deprecated Please use the new paginated many mutation (publishManyWorkoutsConnection)
    */
@@ -2701,6 +3257,8 @@ export type Mutation = {
   schedulePublishEquipment?: Maybe<Equipment>;
   /** Schedule to publish one exercise */
   schedulePublishExercise?: Maybe<Exercise>;
+  /** Schedule to publish one loggedWorkout */
+  schedulePublishLoggedWorkout?: Maybe<LoggedWorkout>;
   /** Schedule to publish one workout */
   schedulePublishWorkout?: Maybe<Workout>;
   /** Unpublish one asset from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
@@ -2711,6 +3269,8 @@ export type Mutation = {
   scheduleUnpublishEquipment?: Maybe<Equipment>;
   /** Unpublish one exercise from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   scheduleUnpublishExercise?: Maybe<Exercise>;
+  /** Unpublish one loggedWorkout from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  scheduleUnpublishLoggedWorkout?: Maybe<LoggedWorkout>;
   /** Unpublish one workout from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   scheduleUnpublishWorkout?: Maybe<Workout>;
   /** Unpublish one asset from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
@@ -2721,6 +3281,8 @@ export type Mutation = {
   unpublishEquipment?: Maybe<Equipment>;
   /** Unpublish one exercise from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   unpublishExercise?: Maybe<Exercise>;
+  /** Unpublish one loggedWorkout from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  unpublishLoggedWorkout?: Maybe<LoggedWorkout>;
   /**
    * Unpublish many Asset documents
    * @deprecated Please use the new paginated many mutation (unpublishManyAssetsConnection)
@@ -2750,6 +3312,13 @@ export type Mutation = {
   /** Find many Exercise documents that match criteria in specified stage and unpublish from target stages */
   unpublishManyExercisesConnection: ExerciseConnection;
   /**
+   * Unpublish many LoggedWorkout documents
+   * @deprecated Please use the new paginated many mutation (unpublishManyLoggedWorkoutsConnection)
+   */
+  unpublishManyLoggedWorkouts: BatchPayload;
+  /** Find many LoggedWorkout documents that match criteria in specified stage and unpublish from target stages */
+  unpublishManyLoggedWorkoutsConnection: LoggedWorkoutConnection;
+  /**
    * Unpublish many Workout documents
    * @deprecated Please use the new paginated many mutation (unpublishManyWorkoutsConnection)
    */
@@ -2766,6 +3335,8 @@ export type Mutation = {
   updateEquipment?: Maybe<Equipment>;
   /** Update one exercise */
   updateExercise?: Maybe<Exercise>;
+  /** Update one loggedWorkout */
+  updateLoggedWorkout?: Maybe<LoggedWorkout>;
   /**
    * Update many assets
    * @deprecated Please use the new paginated many mutation (updateManyAssetsConnection)
@@ -2795,6 +3366,13 @@ export type Mutation = {
   /** Update many Exercise documents */
   updateManyExercisesConnection: ExerciseConnection;
   /**
+   * Update many loggedWorkouts
+   * @deprecated Please use the new paginated many mutation (updateManyLoggedWorkoutsConnection)
+   */
+  updateManyLoggedWorkouts: BatchPayload;
+  /** Update many LoggedWorkout documents */
+  updateManyLoggedWorkoutsConnection: LoggedWorkoutConnection;
+  /**
    * Update many workouts
    * @deprecated Please use the new paginated many mutation (updateManyWorkoutsConnection)
    */
@@ -2813,6 +3391,8 @@ export type Mutation = {
   upsertEquipment?: Maybe<Equipment>;
   /** Upsert one exercise */
   upsertExercise?: Maybe<Exercise>;
+  /** Upsert one loggedWorkout */
+  upsertLoggedWorkout?: Maybe<LoggedWorkout>;
   /** Upsert one workout */
   upsertWorkout?: Maybe<Workout>;
 };
@@ -2835,6 +3415,11 @@ export type MutationCreateEquipmentArgs = {
 
 export type MutationCreateExerciseArgs = {
   data: ExerciseCreateInput;
+};
+
+
+export type MutationCreateLoggedWorkoutArgs = {
+  data: LoggedWorkoutCreateInput;
 };
 
 
@@ -2865,6 +3450,11 @@ export type MutationDeleteEquipmentArgs = {
 
 export type MutationDeleteExerciseArgs = {
   where: ExerciseWhereUniqueInput;
+};
+
+
+export type MutationDeleteLoggedWorkoutArgs = {
+  where: LoggedWorkoutWhereUniqueInput;
 };
 
 
@@ -2928,6 +3518,21 @@ export type MutationDeleteManyExercisesConnectionArgs = {
 };
 
 
+export type MutationDeleteManyLoggedWorkoutsArgs = {
+  where?: InputMaybe<LoggedWorkoutManyWhereInput>;
+};
+
+
+export type MutationDeleteManyLoggedWorkoutsConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']>;
+  before?: InputMaybe<Scalars['ID']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<LoggedWorkoutManyWhereInput>;
+};
+
+
 export type MutationDeleteManyWorkoutsArgs = {
   where?: InputMaybe<WorkoutManyWhereInput>;
 };
@@ -2988,6 +3593,12 @@ export type MutationPublishExerciseArgs = {
   to?: Array<Stage>;
   where: ExerciseWhereUniqueInput;
   withDefaultLocale?: InputMaybe<Scalars['Boolean']>;
+};
+
+
+export type MutationPublishLoggedWorkoutArgs = {
+  to?: Array<Stage>;
+  where: LoggedWorkoutWhereUniqueInput;
 };
 
 
@@ -3081,6 +3692,24 @@ export type MutationPublishManyExercisesConnectionArgs = {
 };
 
 
+export type MutationPublishManyLoggedWorkoutsArgs = {
+  to?: Array<Stage>;
+  where?: InputMaybe<LoggedWorkoutManyWhereInput>;
+};
+
+
+export type MutationPublishManyLoggedWorkoutsConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']>;
+  before?: InputMaybe<Scalars['ID']>;
+  first?: InputMaybe<Scalars['Int']>;
+  from?: InputMaybe<Stage>;
+  last?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  to?: Array<Stage>;
+  where?: InputMaybe<LoggedWorkoutManyWhereInput>;
+};
+
+
 export type MutationPublishManyWorkoutsArgs = {
   to?: Array<Stage>;
   where?: InputMaybe<WorkoutManyWhereInput>;
@@ -3146,6 +3775,14 @@ export type MutationSchedulePublishExerciseArgs = {
 };
 
 
+export type MutationSchedulePublishLoggedWorkoutArgs = {
+  releaseAt?: InputMaybe<Scalars['DateTime']>;
+  releaseId?: InputMaybe<Scalars['String']>;
+  to?: Array<Stage>;
+  where: LoggedWorkoutWhereUniqueInput;
+};
+
+
 export type MutationSchedulePublishWorkoutArgs = {
   releaseAt?: InputMaybe<Scalars['DateTime']>;
   releaseId?: InputMaybe<Scalars['String']>;
@@ -3192,6 +3829,14 @@ export type MutationScheduleUnpublishExerciseArgs = {
 };
 
 
+export type MutationScheduleUnpublishLoggedWorkoutArgs = {
+  from?: Array<Stage>;
+  releaseAt?: InputMaybe<Scalars['DateTime']>;
+  releaseId?: InputMaybe<Scalars['String']>;
+  where: LoggedWorkoutWhereUniqueInput;
+};
+
+
 export type MutationScheduleUnpublishWorkoutArgs = {
   from?: Array<Stage>;
   releaseAt?: InputMaybe<Scalars['DateTime']>;
@@ -3227,6 +3872,12 @@ export type MutationUnpublishExerciseArgs = {
   locales?: InputMaybe<Array<Locale>>;
   unpublishBase?: InputMaybe<Scalars['Boolean']>;
   where: ExerciseWhereUniqueInput;
+};
+
+
+export type MutationUnpublishLoggedWorkoutArgs = {
+  from?: Array<Stage>;
+  where: LoggedWorkoutWhereUniqueInput;
 };
 
 
@@ -3314,6 +3965,24 @@ export type MutationUnpublishManyExercisesConnectionArgs = {
 };
 
 
+export type MutationUnpublishManyLoggedWorkoutsArgs = {
+  from?: Array<Stage>;
+  where?: InputMaybe<LoggedWorkoutManyWhereInput>;
+};
+
+
+export type MutationUnpublishManyLoggedWorkoutsConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']>;
+  before?: InputMaybe<Scalars['ID']>;
+  first?: InputMaybe<Scalars['Int']>;
+  from?: Array<Stage>;
+  last?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  stage?: InputMaybe<Stage>;
+  where?: InputMaybe<LoggedWorkoutManyWhereInput>;
+};
+
+
 export type MutationUnpublishManyWorkoutsArgs = {
   from?: Array<Stage>;
   where?: InputMaybe<WorkoutManyWhereInput>;
@@ -3359,6 +4028,12 @@ export type MutationUpdateEquipmentArgs = {
 export type MutationUpdateExerciseArgs = {
   data: ExerciseUpdateInput;
   where: ExerciseWhereUniqueInput;
+};
+
+
+export type MutationUpdateLoggedWorkoutArgs = {
+  data: LoggedWorkoutUpdateInput;
+  where: LoggedWorkoutWhereUniqueInput;
 };
 
 
@@ -3430,6 +4105,23 @@ export type MutationUpdateManyExercisesConnectionArgs = {
 };
 
 
+export type MutationUpdateManyLoggedWorkoutsArgs = {
+  data: LoggedWorkoutUpdateManyInput;
+  where?: InputMaybe<LoggedWorkoutManyWhereInput>;
+};
+
+
+export type MutationUpdateManyLoggedWorkoutsConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']>;
+  before?: InputMaybe<Scalars['ID']>;
+  data: LoggedWorkoutUpdateManyInput;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<LoggedWorkoutManyWhereInput>;
+};
+
+
 export type MutationUpdateManyWorkoutsArgs = {
   data: WorkoutUpdateManyInput;
   where?: InputMaybe<WorkoutManyWhereInput>;
@@ -3480,6 +4172,12 @@ export type MutationUpsertEquipmentArgs = {
 export type MutationUpsertExerciseArgs = {
   upsert: ExerciseUpsertInput;
   where: ExerciseWhereUniqueInput;
+};
+
+
+export type MutationUpsertLoggedWorkoutArgs = {
+  upsert: LoggedWorkoutUpsertInput;
+  where: LoggedWorkoutWhereUniqueInput;
 };
 
 
@@ -3552,6 +4250,14 @@ export type Query = {
   exercises: Array<Exercise>;
   /** Retrieve multiple exercises using the Relay connection interface */
   exercisesConnection: ExerciseConnection;
+  /** Retrieve a single loggedWorkout */
+  loggedWorkout?: Maybe<LoggedWorkout>;
+  /** Retrieve document version */
+  loggedWorkoutVersion?: Maybe<DocumentVersion>;
+  /** Retrieve multiple loggedWorkouts */
+  loggedWorkouts: Array<LoggedWorkout>;
+  /** Retrieve multiple loggedWorkouts using the Relay connection interface */
+  loggedWorkoutsConnection: LoggedWorkoutConnection;
   /** Fetches an object given its ID */
   node?: Maybe<Node>;
   /** Retrieve a single scheduledOperation */
@@ -3732,6 +4438,44 @@ export type QueryExercisesConnectionArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   stage?: Stage;
   where?: InputMaybe<ExerciseWhereInput>;
+};
+
+
+export type QueryLoggedWorkoutArgs = {
+  locales?: Array<Locale>;
+  stage?: Stage;
+  where: LoggedWorkoutWhereUniqueInput;
+};
+
+
+export type QueryLoggedWorkoutVersionArgs = {
+  where: VersionWhereInput;
+};
+
+
+export type QueryLoggedWorkoutsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  locales?: Array<Locale>;
+  orderBy?: InputMaybe<LoggedWorkoutOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']>;
+  stage?: Stage;
+  where?: InputMaybe<LoggedWorkoutWhereInput>;
+};
+
+
+export type QueryLoggedWorkoutsConnectionArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  locales?: Array<Locale>;
+  orderBy?: InputMaybe<LoggedWorkoutOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']>;
+  stage?: Stage;
+  where?: InputMaybe<LoggedWorkoutWhereInput>;
 };
 
 
@@ -3990,7 +4734,7 @@ export type ScheduledOperationUpdatedByArgs = {
   locales?: InputMaybe<Array<Locale>>;
 };
 
-export type ScheduledOperationAffectedDocument = Asset | Athlete | Equipment | Exercise | Workout;
+export type ScheduledOperationAffectedDocument = Asset | Athlete | Equipment | Exercise | LoggedWorkout | Workout;
 
 export type ScheduledOperationConnectInput = {
   /** Allow to specify document position in list of connected documents, will default to appending at end of list */
@@ -5338,10 +6082,12 @@ export enum WeightUnit {
 
 export type Workout = Node & {
   __typename?: 'Workout';
+  athletes: Array<Athlete>;
   /** The time the document was created */
   createdAt: Scalars['DateTime'];
   /** User that created this document */
   createdBy?: Maybe<User>;
+  difficulty?: Maybe<Difficulty>;
   /** Get the document in other stages */
   documentInStages: Array<Workout>;
   exercises: Array<Exercise>;
@@ -5349,18 +6095,33 @@ export type Workout = Node & {
   history: Array<Version>;
   /** The unique identifier */
   id: Scalars['ID'];
+  loggedWorkouts: Array<LoggedWorkout>;
   name: Scalars['String'];
   /** The time the document was published. Null on documents in draft stage. */
   publishedAt?: Maybe<Scalars['DateTime']>;
   /** User that last published this document */
   publishedBy?: Maybe<User>;
   scheduledIn: Array<ScheduledOperation>;
+  slug?: Maybe<Scalars['String']>;
   /** System stage field */
   stage: Stage;
   /** The time the document was updated */
   updatedAt: Scalars['DateTime'];
   /** User that last updated this document */
   updatedBy?: Maybe<User>;
+};
+
+
+export type WorkoutAthletesArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  forceParentLocale?: InputMaybe<Scalars['Boolean']>;
+  last?: InputMaybe<Scalars['Int']>;
+  locales?: InputMaybe<Array<Locale>>;
+  orderBy?: InputMaybe<AthleteOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<AthleteWhereInput>;
 };
 
 
@@ -5394,6 +6155,19 @@ export type WorkoutHistoryArgs = {
   limit?: Scalars['Int'];
   skip?: Scalars['Int'];
   stageOverride?: InputMaybe<Stage>;
+};
+
+
+export type WorkoutLoggedWorkoutsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  forceParentLocale?: InputMaybe<Scalars['Boolean']>;
+  last?: InputMaybe<Scalars['Int']>;
+  locales?: InputMaybe<Array<Locale>>;
+  orderBy?: InputMaybe<LoggedWorkoutOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<LoggedWorkoutWhereInput>;
 };
 
 
@@ -5438,9 +6212,13 @@ export type WorkoutConnection = {
 };
 
 export type WorkoutCreateInput = {
+  athletes?: InputMaybe<AthleteCreateManyInlineInput>;
   createdAt?: InputMaybe<Scalars['DateTime']>;
+  difficulty?: InputMaybe<Difficulty>;
   exercises?: InputMaybe<ExerciseCreateManyInlineInput>;
+  loggedWorkouts?: InputMaybe<LoggedWorkoutCreateManyInlineInput>;
   name: Scalars['String'];
+  slug?: InputMaybe<Scalars['String']>;
   updatedAt?: InputMaybe<Scalars['DateTime']>;
 };
 
@@ -5477,6 +6255,9 @@ export type WorkoutManyWhereInput = {
   OR?: InputMaybe<Array<WorkoutWhereInput>>;
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars['String']>;
+  athletes_every?: InputMaybe<AthleteWhereInput>;
+  athletes_none?: InputMaybe<AthleteWhereInput>;
+  athletes_some?: InputMaybe<AthleteWhereInput>;
   createdAt?: InputMaybe<Scalars['DateTime']>;
   /** All values greater than the given value. */
   createdAt_gt?: InputMaybe<Scalars['DateTime']>;
@@ -5493,6 +6274,13 @@ export type WorkoutManyWhereInput = {
   /** All values that are not contained in given list. */
   createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
   createdBy?: InputMaybe<UserWhereInput>;
+  difficulty?: InputMaybe<Difficulty>;
+  /** All values that are contained in given list. */
+  difficulty_in?: InputMaybe<Array<InputMaybe<Difficulty>>>;
+  /** All values that are not equal to given value. */
+  difficulty_not?: InputMaybe<Difficulty>;
+  /** All values that are not contained in given list. */
+  difficulty_not_in?: InputMaybe<Array<InputMaybe<Difficulty>>>;
   documentInStages_every?: InputMaybe<WorkoutWhereStageInput>;
   documentInStages_none?: InputMaybe<WorkoutWhereStageInput>;
   documentInStages_some?: InputMaybe<WorkoutWhereStageInput>;
@@ -5518,6 +6306,9 @@ export type WorkoutManyWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']>;
+  loggedWorkouts_every?: InputMaybe<LoggedWorkoutWhereInput>;
+  loggedWorkouts_none?: InputMaybe<LoggedWorkoutWhereInput>;
+  loggedWorkouts_some?: InputMaybe<LoggedWorkoutWhereInput>;
   name?: InputMaybe<Scalars['String']>;
   /** All values containing the given string. */
   name_contains?: InputMaybe<Scalars['String']>;
@@ -5556,6 +6347,25 @@ export type WorkoutManyWhereInput = {
   scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  slug?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  slug_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  slug_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  slug_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values that are not equal to given value. */
+  slug_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  slug_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  slug_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  slug_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values not starting with the given string. */
+  slug_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  slug_starts_with?: InputMaybe<Scalars['String']>;
   updatedAt?: InputMaybe<Scalars['DateTime']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']>;
@@ -5577,19 +6387,27 @@ export type WorkoutManyWhereInput = {
 export enum WorkoutOrderByInput {
   CreatedAtAsc = 'createdAt_ASC',
   CreatedAtDesc = 'createdAt_DESC',
+  DifficultyAsc = 'difficulty_ASC',
+  DifficultyDesc = 'difficulty_DESC',
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   NameAsc = 'name_ASC',
   NameDesc = 'name_DESC',
   PublishedAtAsc = 'publishedAt_ASC',
   PublishedAtDesc = 'publishedAt_DESC',
+  SlugAsc = 'slug_ASC',
+  SlugDesc = 'slug_DESC',
   UpdatedAtAsc = 'updatedAt_ASC',
   UpdatedAtDesc = 'updatedAt_DESC'
 }
 
 export type WorkoutUpdateInput = {
+  athletes?: InputMaybe<AthleteUpdateManyInlineInput>;
+  difficulty?: InputMaybe<Difficulty>;
   exercises?: InputMaybe<ExerciseUpdateManyInlineInput>;
+  loggedWorkouts?: InputMaybe<LoggedWorkoutUpdateManyInlineInput>;
   name?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']>;
 };
 
 export type WorkoutUpdateManyInlineInput = {
@@ -5610,8 +6428,7 @@ export type WorkoutUpdateManyInlineInput = {
 };
 
 export type WorkoutUpdateManyInput = {
-  /** No fields in updateMany data input */
-  _?: InputMaybe<Scalars['String']>;
+  difficulty?: InputMaybe<Difficulty>;
 };
 
 export type WorkoutUpdateManyWithNestedWhereInput = {
@@ -5673,6 +6490,9 @@ export type WorkoutWhereInput = {
   OR?: InputMaybe<Array<WorkoutWhereInput>>;
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars['String']>;
+  athletes_every?: InputMaybe<AthleteWhereInput>;
+  athletes_none?: InputMaybe<AthleteWhereInput>;
+  athletes_some?: InputMaybe<AthleteWhereInput>;
   createdAt?: InputMaybe<Scalars['DateTime']>;
   /** All values greater than the given value. */
   createdAt_gt?: InputMaybe<Scalars['DateTime']>;
@@ -5689,6 +6509,13 @@ export type WorkoutWhereInput = {
   /** All values that are not contained in given list. */
   createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
   createdBy?: InputMaybe<UserWhereInput>;
+  difficulty?: InputMaybe<Difficulty>;
+  /** All values that are contained in given list. */
+  difficulty_in?: InputMaybe<Array<InputMaybe<Difficulty>>>;
+  /** All values that are not equal to given value. */
+  difficulty_not?: InputMaybe<Difficulty>;
+  /** All values that are not contained in given list. */
+  difficulty_not_in?: InputMaybe<Array<InputMaybe<Difficulty>>>;
   documentInStages_every?: InputMaybe<WorkoutWhereStageInput>;
   documentInStages_none?: InputMaybe<WorkoutWhereStageInput>;
   documentInStages_some?: InputMaybe<WorkoutWhereStageInput>;
@@ -5714,6 +6541,9 @@ export type WorkoutWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']>;
+  loggedWorkouts_every?: InputMaybe<LoggedWorkoutWhereInput>;
+  loggedWorkouts_none?: InputMaybe<LoggedWorkoutWhereInput>;
+  loggedWorkouts_some?: InputMaybe<LoggedWorkoutWhereInput>;
   name?: InputMaybe<Scalars['String']>;
   /** All values containing the given string. */
   name_contains?: InputMaybe<Scalars['String']>;
@@ -5752,6 +6582,25 @@ export type WorkoutWhereInput = {
   scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  slug?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  slug_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  slug_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  slug_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values that are not equal to given value. */
+  slug_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  slug_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  slug_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  slug_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values not starting with the given string. */
+  slug_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  slug_starts_with?: InputMaybe<Scalars['String']>;
   updatedAt?: InputMaybe<Scalars['DateTime']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']>;
@@ -5788,6 +6637,7 @@ export type WorkoutWhereStageInput = {
 export type WorkoutWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']>;
   name?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']>;
 };
 
 export enum _FilterKind {
@@ -5904,8 +6754,49 @@ export type GetExercisesQueryVariables = Exact<{
 
 export type GetExercisesQuery = { __typename?: 'Query', exercises: Array<{ __typename?: 'Exercise', id: string, name: string, primaryMuscleGroup?: MuscleGroup | null, secondaryMuscleGroups: Array<MuscleGroup>, difficulty: Difficulty, isBodyweight?: boolean | null, isUnilateral?: boolean | null }> };
 
+export type CreateLoggedWorkoutMutationVariables = Exact<{
+  date: Scalars['Date'];
+  sets: Array<Scalars['Json']> | Scalars['Json'];
+  workoutId: Scalars['ID'];
+  athleteId: Scalars['ID'];
+}>;
+
+
+export type CreateLoggedWorkoutMutation = { __typename?: 'Mutation', createLoggedWorkout?: { __typename?: 'LoggedWorkout', id: string, date: any, sets: Array<any>, athlete?: { __typename?: 'Athlete', username: string } | null } | null };
+
+export type UpdateLoggedWorkoutMutationVariables = Exact<{
+  date: Scalars['Date'];
+  sets: Array<Scalars['Json']> | Scalars['Json'];
+  workoutId: Scalars['ID'];
+  athleteId: Scalars['ID'];
+  loggedWorkoutId: Scalars['ID'];
+}>;
+
+
+export type UpdateLoggedWorkoutMutation = { __typename?: 'Mutation', updateLoggedWorkout?: { __typename?: 'LoggedWorkout', id: string, date: any, sets: Array<any>, athlete?: { __typename?: 'Athlete', username: string } | null } | null };
+
+export type GetWorkoutsQueryVariables = Exact<{
+  first?: Scalars['Int'];
+  skip?: Scalars['Int'];
+  where?: InputMaybe<WorkoutWhereInput>;
+}>;
+
+
+export type GetWorkoutsQuery = { __typename?: 'Query', workouts: Array<{ __typename?: 'Workout', id: string, name: string, slug?: string | null }> };
+
+export type GetWorkoutBySlugQueryVariables = Exact<{
+  slug: Scalars['String'];
+}>;
+
+
+export type GetWorkoutBySlugQuery = { __typename?: 'Query', workout?: { __typename?: 'Workout', id: string, name: string, slug?: string | null, exercises: Array<{ __typename?: 'Exercise', id: string, name: string }> } | null };
+
 
 export const GetAthleteByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getAthleteById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"auth0Id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"athlete"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"auth0Id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"auth0Id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"auth0Id"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"weight"}},{"kind":"Field","name":{"kind":"Name","value":"height"}},{"kind":"Field","name":{"kind":"Name","value":"preferredWeightUnit"}}]}}]}}]} as unknown as DocumentNode<GetAthleteByIdQuery, GetAthleteByIdQueryVariables>;
 export const UpdateAthleteDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateAthlete"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"auth0Id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"height"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"weight"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"preferredWeightUnit"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"WeightUnit"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateAthlete"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"auth0Id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"auth0Id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"height"},"value":{"kind":"Variable","name":{"kind":"Name","value":"height"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"weight"},"value":{"kind":"Variable","name":{"kind":"Name","value":"weight"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"preferredWeightUnit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"preferredWeightUnit"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"auth0Id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"auth0Id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"auth0Id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"height"}},{"kind":"Field","name":{"kind":"Name","value":"weight"}},{"kind":"Field","name":{"kind":"Name","value":"preferredWeightUnit"}}]}}]}}]} as unknown as DocumentNode<UpdateAthleteMutation, UpdateAthleteMutationVariables>;
 export const PublishAthleteDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"publishAthlete"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"auth0Id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"publishAthlete"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"auth0Id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"auth0Id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"to"},"value":{"kind":"EnumValue","value":"PUBLISHED"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"auth0Id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]} as unknown as DocumentNode<PublishAthleteMutation, PublishAthleteMutationVariables>;
 export const GetExercisesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getExercises"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"skip"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ExerciseWhereInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"exercises"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"skip"},"value":{"kind":"Variable","name":{"kind":"Name","value":"skip"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"primaryMuscleGroup"}},{"kind":"Field","name":{"kind":"Name","value":"secondaryMuscleGroups"}},{"kind":"Field","name":{"kind":"Name","value":"difficulty"}},{"kind":"Field","name":{"kind":"Name","value":"isBodyweight"}},{"kind":"Field","name":{"kind":"Name","value":"isUnilateral"}}]}}]}}]} as unknown as DocumentNode<GetExercisesQuery, GetExercisesQueryVariables>;
+export const CreateLoggedWorkoutDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createLoggedWorkout"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Date"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"sets"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Json"}}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"workoutId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"athleteId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createLoggedWorkout"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"sets"},"value":{"kind":"Variable","name":{"kind":"Name","value":"sets"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"workout"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"connect"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"workoutId"}}}]}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"athlete"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"connect"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"athleteId"}}}]}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"sets"}},{"kind":"Field","name":{"kind":"Name","value":"athlete"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]}}]} as unknown as DocumentNode<CreateLoggedWorkoutMutation, CreateLoggedWorkoutMutationVariables>;
+export const UpdateLoggedWorkoutDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateLoggedWorkout"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"date"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Date"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"sets"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Json"}}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"workoutId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"athleteId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"loggedWorkoutId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateLoggedWorkout"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"sets"},"value":{"kind":"Variable","name":{"kind":"Name","value":"sets"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"workout"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"connect"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"workoutId"}}}]}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"athlete"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"connect"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"athleteId"}}}]}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"loggedWorkoutId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"sets"}},{"kind":"Field","name":{"kind":"Name","value":"athlete"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateLoggedWorkoutMutation, UpdateLoggedWorkoutMutationVariables>;
+export const GetWorkoutsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getWorkouts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},"defaultValue":{"kind":"IntValue","value":"20"}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"skip"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},"defaultValue":{"kind":"IntValue","value":"0"}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"WorkoutWhereInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"workouts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"skip"},"value":{"kind":"Variable","name":{"kind":"Name","value":"skip"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}}]}}]}}]} as unknown as DocumentNode<GetWorkoutsQuery, GetWorkoutsQueryVariables>;
+export const GetWorkoutBySlugDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getWorkoutBySlug"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"slug"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"workout"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"slug"},"value":{"kind":"Variable","name":{"kind":"Name","value":"slug"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"exercises"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<GetWorkoutBySlugQuery, GetWorkoutBySlugQueryVariables>;

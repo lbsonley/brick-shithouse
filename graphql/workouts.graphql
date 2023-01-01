@@ -1,0 +1,23 @@
+query getWorkouts($first: Int! = 20, $skip: Int! = 0, $where: WorkoutWhereInput) {
+  workouts(
+    first: $first
+    skip: $skip
+    where: $where
+  ) {
+    id
+    name
+    slug
+  }
+}
+
+query getWorkoutBySlug($slug: String!) {
+  workout(where: { slug: $slug }) {
+    id
+    name
+    slug
+    exercises {
+      id
+      name
+    }
+  }
+}
