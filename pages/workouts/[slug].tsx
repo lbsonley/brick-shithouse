@@ -24,7 +24,9 @@ const WorkoutDetail: NextPage = () => {
       setResult(response);
     }
 
-    fetchWorkouts();
+    if (query.slug) {
+      fetchWorkouts();
+    }
   }, [query.slug]);
 
   return (
