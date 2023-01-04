@@ -1,47 +1,40 @@
-mutation createLoggedWorkout(
-  $date: Date!,
-  $sets: [Json!]!,
-  $workoutId: ID!,
-  $athleteId:ID!
-) {
-  createLoggedWorkout(
-    data: {
-      date: $date,
-      sets: $sets,
-      workout: { connect: { id: $workoutId } },
-      athlete: { connect: { id: $athleteId } }
-    }
-  ) {
-    id
+query getLoggedWorkoutById($loggedWorkoutId: ID!) {
+  loggedWorkout(where: { id: $loggedWorkoutId }) {
     date
-    sets
-    athlete {
-      username
+    workout {
+      name
+      exercises {
+        id
+        name
+        slug
+      }
+    }
+    loggedSets {
+      date
+      reps
+      weight
+      weightUnit
     }
   }
 }
 
-mutation updateLoggedWorkout(
-  $date: Date!,
-  $sets: [Json!]!,
-  $workoutId: ID!,
-  $athleteId: ID!,
-  $loggedWorkoutId: ID!
+mutation createLoggedWorkout(
+  $date:Date!,
+  $athleteAuth0Id:String!,
+  $workoutSlug:String!
 ) {
-  updateLoggedWorkout(
+  createLoggedWorkout(
     data: {
       date: $date,
-      sets: $sets,
-      workout: { connect:{ id: $workoutId } },
-      athlete: { connect: { id: $athleteId } }
-    },
-  	where: {id: $loggedWorkoutId}
-	) {
+      athlete: {connect: {auth0Id: $athleteAuth0Id}},
+      workout: {connect: {slug: $workoutSlug}}}
+  ) {
     id
-    date
-    sets
-    athlete {
-      username
-    }
+  }
+}
+
+mutation publishLoggedWorkout($loggedWorkoutId: ID!) {
+  publishLoggedWorkout(where: {id: $loggedWorkoutId}) {
+    id
   }
 }

@@ -1,0 +1,19 @@
+@use "../../../styles/utils";
+@use "../../../styles/mixins/typography";
+@use "../../../styles/mixins/a11y";
+
+.sidebarMenuTitle {
+  @include typography.heading-4;
+  @include a11y.visually-hidden;
+}
+
+.sidebarMenuListItem {
+  display: flex;
+  align-items: center;
+}
+
+.sidebarMenuLink {
+  @include utils.block-link;
+
+  width: 100%;
+}

@@ -1,15 +1,21 @@
 import { useEffect, useState } from "react";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import {
   GetWorkoutBySlugDocument,
   GetWorkoutBySlugQuery,
+  CreateLoggedWorkoutDocument,
+  PublishLoggedWorkoutDocument,
 } from "../../graphql/generated";
 import { request } from "../../lib/request";
 import Main from "../../components/layout/main/main";
+import Button from "../../components/base/button/button";
 
 const WorkoutDetail: NextPage = () => {
-  const { query } = useRouter();
+  const { user } = useUser();
+  const router = useRouter();
+  const { query } = router;
   const [
     result,
     setResult,
@@ -29,6 +35,38 @@ const WorkoutDetail: NextPage = () => {
     }
   }, [query.slug]);
 
+  async function handleStartWorkout(
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) {
+    event.preventDefault();
+    const date = new Date();
+    const year = date.getFullYear();
+    let month = `${date.getMonth() + 1}`;
+    if (month.length === 1) {
+      month = `0${month}`;
+    };
+    let day = `${date.getDate()}`;
+    if (day.length === 1) {
+      day = `0${day}`;
+    }
+    const dateString = `${year}-${month}-${day}`;
+
+    const { createLoggedWorkout } = await request(CreateLoggedWorkoutDocument, {
+      date: dateString,
+      athleteAuth0Id: user!.sub,
+      workoutSlug: query.slug,
+    });
+
+    if (createLoggedWorkout) {
+      const { publishLoggedWorkout } = await request(
+        PublishLoggedWorkoutDocument,
+        { loggedWorkoutId: createLoggedWorkout.id },
+      );
+
+      router.push(`/log/${createLoggedWorkout.id}`);
+    }
+  }
+
   return (
     <Main>
       {workout && (
@@ -42,6 +80,10 @@ const WorkoutDetail: NextPage = () => {
           </ul>
         </>
       )}
+      <Button
+        type="button"
+        handleClick={handleStartWorkout}
+      >Start Workout</Button>
     </Main>
   );
 };

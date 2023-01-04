@@ -1,0 +1,20 @@
+query getLoggedSetsByAthleteLoggedWorkoutExercise(
+  $athleteAuth0Id: String!
+  $loggedWorkoutId: ID!,
+  $exerciseSlug: String!,
+) {
+  loggedSets(
+    where: {
+      athlete: {auth0Id: $athleteAuth0Id},
+      exercise: {slug: $exerciseSlug},
+      loggedWorkout: {id: $loggedWorkoutId}
+    }
+  ) {
+    id
+    reps
+    weight
+    exercise {
+      name
+    }
+  }
+}
