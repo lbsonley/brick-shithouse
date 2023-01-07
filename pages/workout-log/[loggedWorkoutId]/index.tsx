@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { request } from "../../../lib/request";
 import {
   GetLoggedWorkoutByIdDocument,
   GetLoggedWorkoutByIdQuery,
@@ -7,7 +8,6 @@ import {
 import Main from "../../../components/layout/main/main";
 import Sidebar from "../../../components/layout/sidebar/sidebar";
 import SidebarMenu from "../../../components/layout/sidebar/sidebar-menu";
-import { request } from "../../../lib/request";
 
 const WorkoutLog = () => {
   const { query } = useRouter();
@@ -29,7 +29,7 @@ const WorkoutLog = () => {
   function makeSidebarMenuLinks() {
     return result && result.loggedWorkout
       ? result.loggedWorkout!.workout!.exercises.map((exercise) => ({
-        href: `/log/${query.loggedWorkoutId}/${exercise.slug}`,
+        href: `/workout-log/${query.loggedWorkoutId}/${exercise.slug}`,
         label: exercise.name,
       }))
       : [];

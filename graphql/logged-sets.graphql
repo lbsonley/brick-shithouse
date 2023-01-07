@@ -17,4 +17,12 @@ query getLoggedSetsByAthleteLoggedWorkoutExercise(
       name
     }
   }
+  loggedWorkout( where: { id: $loggedWorkoutId } ) {
+    workout {
+      exercises {
+        slug
+        name
+      }
+    }
+  }
 }

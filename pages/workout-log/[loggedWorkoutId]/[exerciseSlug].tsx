@@ -7,6 +7,8 @@ import {
 } from "../../../graphql/generated";
 import { request } from "../../../lib/request";
 import Main from "../../../components/layout/main/main";
+import Sidebar from "../../../components/layout/sidebar/sidebar";
+import SidebarMenu from "../../../components/layout/sidebar/sidebar-menu";
 
 const ExerciseLog = () => {
   const [
@@ -35,10 +37,26 @@ const ExerciseLog = () => {
     }
   }, [query, user]);
 
+  function makeSidebarMenuLinks() {
+    return result && result.loggedWorkout
+      ? result.loggedWorkout!.workout!.exercises.map((exercise) => ({
+        href: `/workout-log/${query.loggedWorkoutId}/${exercise.slug}`,
+        label: exercise.name,
+      }))
+      : [];
+  }
+
   return (
-    <Main>
-      <pre>{JSON.stringify(result, null, 2)}</pre>
-    </Main>
+    <>
+      <Sidebar>
+        <SidebarMenu
+          menuItems={makeSidebarMenuLinks()}
+        />
+      </Sidebar>
+      <Main>
+        <pre>{JSON.stringify(result, null, 2)}</pre>
+      </Main>
+    </>
   );
 };
 

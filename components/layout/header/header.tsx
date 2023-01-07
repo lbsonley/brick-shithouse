@@ -45,6 +45,17 @@ const Header = () => {
                 </Link>
               </li>
               <li className={styles.headerNavListItem}>
+                <Link
+                  href="/workout-log"
+                  className={`
+                    ${styles.headerNavLink}
+                    ${currentRoute === "/workout-log" ? styles.isActive : ""}
+                  `}
+                >
+                  Log
+                </Link>
+              </li>
+              <li className={styles.headerNavListItem}>
                 <span className={styles.headerNavLink}>
                   Schedule
                 </span>

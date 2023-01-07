@@ -63,7 +63,7 @@ const WorkoutDetail: NextPage = () => {
         { loggedWorkoutId: createLoggedWorkout.id },
       );
 
-      router.push(`/log/${createLoggedWorkout.id}`);
+      router.push(`/workout-log/${createLoggedWorkout.id}`);
     }
   }
 

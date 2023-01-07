@@ -1,3 +1,18 @@
+query getLoggedWorkoutsByUser($athleteAuth0Id: String!) {
+  loggedWorkouts(where: {
+    athlete: {
+      auth0Id: $athleteAuth0Id
+    }
+  }) {
+    id
+    date
+    workout {
+    	name
+  	}
+  }
+}
+
+
 query getLoggedWorkoutById($loggedWorkoutId: ID!) {
   loggedWorkout(where: { id: $loggedWorkoutId }) {
     date
