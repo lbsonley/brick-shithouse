@@ -11,6 +11,7 @@ import {
 import { request } from "../../lib/request";
 import Main from "../../components/layout/main/main";
 import Button from "../../components/base/button/button";
+import { formatDateString } from "../../lib/utils";
 
 const WorkoutDetail: NextPage = () => {
   const { user } = useUser();
@@ -39,17 +40,8 @@ const WorkoutDetail: NextPage = () => {
     event: React.MouseEvent<HTMLButtonElement>,
   ) {
     event.preventDefault();
-    const date = new Date();
-    const year = date.getFullYear();
-    let month = `${date.getMonth() + 1}`;
-    if (month.length === 1) {
-      month = `0${month}`;
-    };
-    let day = `${date.getDate()}`;
-    if (day.length === 1) {
-      day = `0${day}`;
-    }
-    const dateString = `${year}-${month}-${day}`;
+
+    const dateString = formatDateString(new Date());
 
     const { createLoggedWorkout } = await request(CreateLoggedWorkoutDocument, {
       date: dateString,

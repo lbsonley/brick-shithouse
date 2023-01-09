@@ -1,7 +1,7 @@
 @use "../variables";
 
 @mixin make-grid-classes() {
-  .grid-wrapper {
+  .grid-container {
     display: flex;
     flex-flow: row wrap;
   }

@@ -10,19 +10,67 @@ query getLoggedSetsByAthleteLoggedWorkoutExercise(
       loggedWorkout: {id: $loggedWorkoutId}
     }
   ) {
-    id
-    reps
-    weight
-    exercise {
-      name
-    }
+    ...repsWeightExerciseName
   }
   loggedWorkout( where: { id: $loggedWorkoutId } ) {
     workout {
+      slug
       exercises {
         slug
         name
       }
     }
+  }
+}
+
+fragment repsWeightExerciseName on LoggedSet {
+  id
+  reps
+  weight
+  exercise {
+    slug
+    name
+  }
+}
+
+mutation createLoggedSet(
+  $athleteAuth0Id: String!,
+  $loggedWorkoutId: ID!,
+  $workoutSlug: String!,
+  $exerciseSlug: String!,
+  $date: Date!,
+  $reps: Int!,
+  $weight: Int!
+  $weightUnit: WeightUnit!,
+) {
+  createLoggedSet(
+    data: {
+      athlete: { connect: { auth0Id: $athleteAuth0Id } },
+      loggedWorkout: { connect: { id: $loggedWorkoutId } },
+      workout: { connect: { slug: $workoutSlug } },
+      exercise: { connect: { slug: $exerciseSlug } },
+      date: $date,
+  		reps: $reps,
+      weight: $weight,
+      weightUnit: $weightUnit
+  	}
+  ) {
+    id
+    athlete {
+      username
+    }
+    loggedWorkout {
+      id
+    }
+    workout {
+      name
+    }
+    exercise {
+      name
+    }
+    date
+    reps
+    weight
+    weightUnit
   }
 }
