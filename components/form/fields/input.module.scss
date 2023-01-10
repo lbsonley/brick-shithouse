@@ -1,7 +1,12 @@
+@use "../../../styles/mixins/a11y";
 @use "../../../styles/variables";
 
 .label {
   margin-right: variables.$space-16;
+
+  &.visuallyHidden {
+    @include a11y.visually-hidden;
+  }
 }
 
 .input,
@@ -9,4 +14,5 @@
   padding: variables.$space-8;
   border: 1px solid variables.$black;
   border-radius: variables.$border-radius;
+  font-size: 100%;
 }

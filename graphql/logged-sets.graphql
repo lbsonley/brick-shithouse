@@ -21,6 +21,9 @@ query getLoggedSetsByAthleteLoggedWorkoutExercise(
       }
     }
   }
+  exercise( where: { slug: $exerciseSlug} ) {
+    name
+  }
 }
 
 fragment repsWeightExerciseName on LoggedSet {

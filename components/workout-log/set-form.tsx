@@ -2,23 +2,18 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { FaPlusSquare } from "react-icons/fa";
-import {
-  RepsWeightExerciseNameFragment,
-  CreateLoggedSetDocument,
-} from "../../graphql/generated";
+import { CreateLoggedSetDocument } from "../../graphql/generated";
 import { request } from "../../lib/request";
 import Input from "../form/fields/input";
-import Button from "../../components/base/button/button";
-import styles from "./sets-form.module.scss";
+import Button from "../base/button/button";
 import { formatDateString } from "../../lib/utils";
 
 interface SetsFormProps {
-  sets: RepsWeightExerciseNameFragment[] | undefined;
   workoutSlug: string | null | undefined;
   updateSets: () => void;
 };
 
-const SetsForm = ({ sets, workoutSlug, updateSets }: SetsFormProps) => {
+const SetForm = ({ workoutSlug, updateSets }: SetsFormProps) => {
   const { query } = useRouter();
   const { user } = useUser();
   const [isSetValid, setIsSetValid] = useState<boolean>(false);
@@ -64,30 +59,9 @@ const SetsForm = ({ sets, workoutSlug, updateSets }: SetsFormProps) => {
 
   return (
     <>
-      {sets && sets.map(({id, reps, weight}) => (
-        <div key={id} className={`${styles.setsForm} grid-container`}>
-          <div className="column-5">
-            <Input
-              label="Reps"
-              placeholder="Reps"
-              inputId={`reps-${id}`}
-              name={`reps-${id}`}
-              initialValue={reps}
-            />
-          </div>
-          <div className="column-5">
-            <Input
-              label="Weight"
-              placeholder="Weight"
-              inputId={`weight-${id}`}
-              name={`weight-${id}`}
-              initialValue={weight}
-            />
-          </div>
-        </div>
-      ))}
-      <div className={`${styles.setsForm} grid-container`}>
-        <div className="column-5">
+      <tr>
+        <td></td>
+        <td>
           <Input
             label="Reps"
             placeholder="Reps"
@@ -95,9 +69,10 @@ const SetsForm = ({ sets, workoutSlug, updateSets }: SetsFormProps) => {
             name="reps"
             initialValue={setData.reps}
             parentHandleChange={handleOnChange}
+            hiddenLabel={true}
           />
-        </div>
-        <div className="column-5">
+        </td>
+        <td>
           <Input
             label="Weight"
             placeholder="Weight"
@@ -105,20 +80,22 @@ const SetsForm = ({ sets, workoutSlug, updateSets }: SetsFormProps) => {
             name="weight"
             initialValue={setData.weight}
             parentHandleChange={handleOnChange}
+            hiddenLabel={true}
           />
-        </div>
-        <div className="column-2">
+        </td>
+        <td>
           <Button
             type="button"
+            size="small"
             disabled={!isSetValid}
             handleClick={handleAddSet}
           >
             <FaPlusSquare/>
           </Button>
-        </div>
-      </div>
+        </td>
+      </tr>
     </>
   );
 };
 
-export default SetsForm;
+export default SetForm;

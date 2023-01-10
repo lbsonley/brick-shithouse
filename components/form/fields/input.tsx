@@ -10,6 +10,7 @@ interface InputProps {
   type?: string;
   disabled?: boolean;
   required?: boolean;
+  hiddenLabel?: boolean;
   parentHandleChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -22,6 +23,7 @@ const Input = ({
   type = "input",
   disabled = false,
   required = false,
+  hiddenLabel = false,
   parentHandleChange = () => {},
 }: InputProps) => {
 
@@ -38,7 +40,10 @@ const Input = ({
   return (
     <>
       <label
-        className={styles.label}
+        className={`
+          ${styles.label}
+          ${hiddenLabel ? styles.visuallyHidden : ""}
+        `}
         htmlFor={inputId}
       >
         {label}

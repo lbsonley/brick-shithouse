@@ -54,3 +54,13 @@ h5 {
 ul {
   list-style: none;
 }
+
+table {
+  width: auto;
+  table-layout: fixed;
+}
+
+th,
+td {
+  padding: variables.$space-8;
+}

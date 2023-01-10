@@ -9,7 +9,7 @@ import { request } from "../../../lib/request";
 import Main from "../../../components/layout/main/main";
 import Sidebar from "../../../components/layout/sidebar/sidebar";
 import SidebarMenu from "../../../components/layout/sidebar/sidebar-menu";
-import SetsForm from "../../../components/workout-log/sets-form";
+import SetTable from "../../../components/workout-log/set-table";
 
 const ExerciseLog = () => {
   const [
@@ -60,7 +60,8 @@ const ExerciseLog = () => {
         />
       </Sidebar>
       <Main>
-        <SetsForm
+        <SetTable
+          title={result?.exercise!.name}
           sets={result?.loggedSets}
           workoutSlug={result?.loggedWorkout!.workout!.slug}
           updateSets={handleUpdateSets}

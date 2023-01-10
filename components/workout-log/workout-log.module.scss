@@ -1,0 +1,20 @@
+@use "../../styles/mixins/a11y";
+@use "../../styles/variables";
+
+.setFormContainer,
+.setTableContainer {
+  display: flex;
+  width: 100%;
+  max-width: variables.$max-content-width-narrow;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.setTable {
+  width: auto;
+  table-layout: fixed;
+}
+
+.setTableHeadCell {
+  text-align: left;
+}

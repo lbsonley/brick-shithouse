@@ -24,8 +24,11 @@ query getLoggedWorkoutById($loggedWorkoutId: ID!) {
         slug
       }
     }
-    loggedSets {
+    loggedSets(first: 50) {
       date
+      exercise {
+        name
+      }
       reps
       weight
       weightUnit
