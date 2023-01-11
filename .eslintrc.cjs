@@ -31,6 +31,8 @@ module.exports = {
           "Props": true,
           "params": true,
           "Params": true,
+          "ref": true,
+          "Ref": true,
         },
       },
     ],

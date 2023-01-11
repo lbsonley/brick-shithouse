@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, forwardRef } from "react";
 import styles from "./input.module.scss";
 
 interface InputProps {
@@ -14,18 +14,21 @@ interface InputProps {
   parentHandleChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input = ({
-  label,
-  name,
-  initialValue = "",
-  inputId,
-  placeholder,
-  type = "input",
-  disabled = false,
-  required = false,
-  hiddenLabel = false,
-  parentHandleChange = () => {},
-}: InputProps) => {
+const Input = forwardRef<HTMLInputElement, InputProps>((
+  {
+    label,
+    name,
+    initialValue = "",
+    inputId,
+    placeholder,
+    type = "input",
+    disabled = false,
+    required = false,
+    hiddenLabel = false,
+    parentHandleChange = () => {},
+  },
+  ref,
+) => {
 
   const [value, setValue] = useState(initialValue);
 
@@ -49,6 +52,7 @@ const Input = ({
         {label}
       </label>
       <input
+        ref={ref}
         className={styles.input}
         required={required}
         name={name}
@@ -61,6 +65,8 @@ const Input = ({
       />
     </>
   );
-};
+});
+
+Input.displayName = "Input";
 
 export default Input;
