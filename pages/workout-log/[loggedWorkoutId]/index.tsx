@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useRouter } from "next/router";
 import { request } from "../../../lib/request";
 import {
@@ -8,6 +8,9 @@ import {
 import Main from "../../../components/layout/main/main";
 import Sidebar from "../../../components/layout/sidebar/sidebar";
 import SidebarMenu from "../../../components/layout/sidebar/sidebar-menu";
+import LoggedWorkoutSummary
+  from "../../../components/workout-log/logged-workout-summary";
+import Loading from "../../../components/base/loading";
 
 const WorkoutLog = () => {
   const { query } = useRouter();
@@ -36,16 +39,20 @@ const WorkoutLog = () => {
   }
 
   return (
-    <>
-      <Sidebar>
-        <SidebarMenu
-          menuItems={makeSidebarMenuLinks()}
-        />
-      </Sidebar>
-      <Main>
-        <pre>{JSON.stringify(result, null, 2)}</pre>
-      </Main>
-    </>
+    <Suspense fallback={<Loading />}>
+      <>
+        <Sidebar>
+          <SidebarMenu
+            menuItems={makeSidebarMenuLinks()}
+          />
+        </Sidebar>
+        <Main>
+          <LoggedWorkoutSummary
+            result={result}
+          />
+        </Main>
+      </>
+    </Suspense>
   );
 };
 

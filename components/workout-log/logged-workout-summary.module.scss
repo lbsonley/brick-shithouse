@@ -1,0 +1,10 @@
+@use "../../styles/mixins/layout-utils";
+@use "../../styles/mixins/typography";
+
+.loggedWorkoutSummary {
+  @include layout-utils.content-max-width-narrow;
+}
+
+.loggedWorkoutSummaryPageTitle {
+  @include typography.heading-3;
+}
