@@ -1,5 +1,9 @@
 module.exports = {
-  extends: ["next/core-web-vitals", "plugin:unicorn/recommended"],
+  extends: [
+    "next/core-web-vitals",
+    "plugin:unicorn/recommended",
+    "plugin:import/recommended",
+  ],
   ignorePatterns: [
     "graphql/*",
   ],

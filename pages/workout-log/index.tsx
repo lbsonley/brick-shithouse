@@ -7,7 +7,6 @@ import {
   GetLoggedWorkoutsByUserDocument,
   GetLoggedWorkoutsByUserQuery,
 } from "../../graphql/generated";
-import styles from "./log.module.scss";
 import Loading from "../../components/base/loading";
 
 const WorkoutLog = () => {
