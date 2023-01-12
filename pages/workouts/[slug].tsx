@@ -11,7 +11,8 @@ import {
 import { request } from "../../lib/request";
 import Main from "../../components/layout/main/main";
 import Button from "../../components/base/button/button";
-import { formatDateString } from "../../lib/utils";
+import { formatDateString } from "../../lib/utils/date-utils";
+import Loading from "../../components/base/loading";
 
 const WorkoutDetail: NextPage = () => {
   const { user } = useUser();
@@ -20,8 +21,7 @@ const WorkoutDetail: NextPage = () => {
   const [
     result,
     setResult,
-  ] = useState<GetWorkoutBySlugQuery>({} as GetWorkoutBySlugQuery);
-  const { workout } = result;
+  ] = useState<GetWorkoutBySlugQuery>();
 
   useEffect(() => {
     async function fetchWorkouts() {
@@ -59,19 +59,19 @@ const WorkoutDetail: NextPage = () => {
     }
   }
 
+  if (result === undefined) return <Loading />;
+
   return (
     <Main>
-      {workout && (
-        <>
-          <h2 className="heading-2">{workout!.name}</h2>
-          <h3 className="heading-3">Exercises</h3>
-          <ul>
-            {workout.exercises.map(({id, name}) => (
-              <li key={id}>{name}</li>
-            ))}
-          </ul>
-        </>
-      )}
+      <>
+        <h2 className="heading-2">{result.workout!.name}</h2>
+        <h3 className="heading-3">Exercises</h3>
+        <ul>
+          {result.workout!.exercises.map(({id, name}) => (
+            <li key={id}>{name}</li>
+          ))}
+        </ul>
+      </>
       <Button
         type="button"
         handleClick={handleStartWorkout}

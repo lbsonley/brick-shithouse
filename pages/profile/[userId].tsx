@@ -15,11 +15,11 @@ import Input from "../../components/form/fields/input";
 import Select from "../../components/form/fields/select";
 import Button from "../../components/base/button/button";
 import styles from "./profile.module.scss";
+import Loading from "../../components/base/loading";
 
 const Profile: NextPage = () => {
   const { query } = useRouter();
-  const [result, setResult] = useState<GetAthleteByIdQuery>({});
-  const { athlete } = result;
+  const [result, setResult] = useState<GetAthleteByIdQuery>();
 
   useEffect(() => {
     async function fetchAthlete () {
@@ -74,6 +74,10 @@ const Profile: NextPage = () => {
 
   };
 
+  if (result === undefined) return <Loading />;
+
+  const { athlete } = result;
+
   return (
     <Main>
       <div className={styles.profile}>
@@ -86,14 +90,14 @@ const Profile: NextPage = () => {
               name="auth0Id"
               type="hidden"
               inputId="auth0Id"
-              initialValue={athlete?.auth0Id}
+              initialValue={athlete.auth0Id}
             />
             <div className={`${styles.inputGrid}`}>
               <Input
                 label="Username"
                 name="username"
                 inputId="username"
-                initialValue={athlete?.username}
+                initialValue={athlete.username}
                 required={true}
               />
               <Input
@@ -101,27 +105,27 @@ const Profile: NextPage = () => {
                 type="email"
                 name="email"
                 inputId="email"
-                initialValue={athlete?.email}
+                initialValue={athlete.email}
                 required={true}
               />
               <Input
                 label="Height"
                 name="height"
                 inputId="height"
-                initialValue={athlete?.height || ""}
+                initialValue={athlete.height || ""}
               />
               <Input
                 label="Weight"
                 name="weight"
                 inputId="weight"
-                initialValue={athlete?.weight || ""}
+                initialValue={athlete.weight || ""}
               />
               <Select
                 inputId="preferredWeightUnit"
                 name="preferredWeightUnit"
                 options={options}
                 label="Preferred Weight Unit"
-                initialValue={athlete?.preferredWeightUnit || ""}
+                initialValue={athlete.preferredWeightUnit || ""}
               />
 
               <Button

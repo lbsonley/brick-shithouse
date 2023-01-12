@@ -7,13 +7,13 @@ import { request } from "../../lib/request";
 import Main from "../../components/layout/main/main";
 import styles from "./exercises.module.scss";
 import { NextPage } from "next";
+import Loading from "../../components/base/loading";
 
 const Exercises: NextPage = () => {
   const [
     result,
     setResult,
-  ] = useState<GetExercisesQuery>({} as GetExercisesQuery);
-  const { exercises } = result;
+  ] = useState<GetExercisesQuery>();
 
   useEffect(() => {
     async function fetchExercises() {
@@ -30,12 +30,14 @@ const Exercises: NextPage = () => {
     fetchExercises();
   }, []);
 
+  if (result === undefined) return <Loading />;
+
   return (
     <>
       <Main>
         <h2 className="heading-3">Exercises</h2>
         <ul className={styles.exerciseList}>
-          {exercises && exercises.map(({id, name}) => (
+          {result.exercises.map(({id, name}) => (
             <li
               className={styles.exerciseListItem}
               key={id}

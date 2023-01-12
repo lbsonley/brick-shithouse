@@ -10,6 +10,7 @@ import Main from "../../../components/layout/main/main";
 import Sidebar from "../../../components/layout/sidebar/sidebar";
 import SidebarMenu from "../../../components/layout/sidebar/sidebar-menu";
 import SetTable from "../../../components/workout-log/set-table";
+import Loading from "../../../components/base/loading";
 
 const ExerciseLog = () => {
   const [
@@ -52,6 +53,8 @@ const ExerciseLog = () => {
     fetchLoggedSets();
   };
 
+  if (result === undefined) return <Loading />;
+
   return (
     <>
       <Sidebar>
@@ -61,9 +64,9 @@ const ExerciseLog = () => {
       </Sidebar>
       <Main>
         <SetTable
-          title={result?.exercise!.name}
-          sets={result?.loggedSets}
-          workoutSlug={result?.loggedWorkout!.workout!.slug}
+          title={result.exercise!.name}
+          sets={result.loggedSets}
+          workoutSlug={result.loggedWorkout!.workout!.slug}
           updateSets={handleUpdateSets}
         />
       </Main>
