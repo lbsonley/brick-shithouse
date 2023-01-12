@@ -1,3 +1,5 @@
+#import loggedSet from "logged-sets.fragments.graphql"
+
 query getLoggedSetsByAthleteLoggedWorkoutExercise(
   $athleteAuth0Id: String!
   $loggedWorkoutId: ID!,
@@ -10,7 +12,7 @@ query getLoggedSetsByAthleteLoggedWorkoutExercise(
       loggedWorkout: {id: $loggedWorkoutId}
     }
   ) {
-    ...repsWeightExerciseName
+    ...loggedSet
   }
   loggedWorkout( where: { id: $loggedWorkoutId } ) {
     workout {
@@ -22,16 +24,6 @@ query getLoggedSetsByAthleteLoggedWorkoutExercise(
     }
   }
   exercise( where: { slug: $exerciseSlug} ) {
-    name
-  }
-}
-
-fragment repsWeightExerciseName on LoggedSet {
-  id
-  reps
-  weight
-  exercise {
-    slug
     name
   }
 }
@@ -59,6 +51,10 @@ mutation createLoggedSet(
   	}
   ) {
     id
+    date
+    reps
+    weight
+    weightUnit
     athlete {
       username
     }
@@ -71,9 +67,5 @@ mutation createLoggedSet(
     exercise {
       name
     }
-    date
-    reps
-    weight
-    weightUnit
   }
 }

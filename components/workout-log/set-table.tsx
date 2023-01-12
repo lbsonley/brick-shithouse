@@ -1,10 +1,10 @@
-import { RepsWeightExerciseNameFragment } from "../../graphql/generated";
+import { LoggedSetFragment } from "../../graphql/generated";
 import SetForm from "./set-form";
 import styles from "./workout-log.module.scss";
 
 interface SetsTableProps {
   title: string | undefined;
-  sets: RepsWeightExerciseNameFragment[] | undefined;
+  sets: LoggedSetFragment[] | undefined;
   workoutSlug: string | null | undefined;
   updateSets: () => void;
 };

@@ -6,7 +6,7 @@ import { CreateLoggedSetDocument } from "../../graphql/generated";
 import { request } from "../../lib/request";
 import Input from "../form/fields/input";
 import Button from "../base/button/button";
-import { formatDateString } from "../../lib/utils";
+import { formatDateString } from "../../lib/utils/date-utils";
 
 interface SetsFormProps {
   workoutSlug: string | null | undefined;

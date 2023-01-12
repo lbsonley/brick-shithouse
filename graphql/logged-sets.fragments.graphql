@@ -1,0 +1,11 @@
+fragment loggedSet on LoggedSet {
+  id
+  date
+  reps
+  weight
+  weightUnit
+  exercise {
+    name
+    slug
+  }
+}

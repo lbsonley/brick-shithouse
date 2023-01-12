@@ -1,4 +1,4 @@
-import { useEffect, useState, Suspense } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { request } from "../../../lib/request";
 import {
@@ -14,7 +14,7 @@ import Loading from "../../../components/base/loading";
 
 const WorkoutLog = () => {
   const { query } = useRouter();
-  const [result, setResult ] = useState<GetLoggedWorkoutByIdQuery>({});
+  const [result, setResult ] = useState<GetLoggedWorkoutByIdQuery>();
 
   useEffect(() => {
     async function fetchLoggedWorkout() {
@@ -38,8 +38,9 @@ const WorkoutLog = () => {
       : [];
   }
 
+  if (result === undefined) return <Loading />;
+
   return (
-    <Suspense fallback={<Loading />}>
       <>
         <Sidebar>
           <SidebarMenu
@@ -52,7 +53,6 @@ const WorkoutLog = () => {
           />
         </Main>
       </>
-    </Suspense>
   );
 };
 
