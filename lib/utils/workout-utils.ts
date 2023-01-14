@@ -3,11 +3,13 @@ import { LoggedSetFragment } from "../../graphql/generated";
 export const computeVolumeByExercise = (
   loggedSets: LoggedSetFragment[] | undefined,
 ) => {
-  const setsByExercise: {[key: string]: {
-    name: string,
-    volume: number,
-    totalSets: number
-  }} = {};
+  const setsByExercise: {
+    [key: string]: {
+      name: string,
+      volume: number,
+      totalSets: number
+    }
+  } = {};
 
   for (const set of loggedSets!) {
     setsByExercise[set!.exercise!.name] = setsByExercise[set!.exercise!.name]
