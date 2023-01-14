@@ -2,6 +2,8 @@ import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import {
+  GetLastLoggedWorkoutDocument,
+  GetLastLoggedWorkoutQuery,
   GetLoggedSetsByAthleteLoggedWorkoutExerciseDocument,
   GetLoggedSetsByAthleteLoggedWorkoutExerciseQuery,
 } from "../../../graphql/generated";
@@ -11,12 +13,18 @@ import Sidebar from "../../../components/layout/sidebar/sidebar";
 import SidebarMenu from "../../../components/layout/sidebar/sidebar-menu";
 import SetTable from "../../../components/workout-log/set-table";
 import Loading from "../../../components/base/loading";
+import Link from "next/link";
 
 const ExerciseLog = () => {
   const [
-    result,
-    setResult,
+    currentLoggedSets,
+    setCurrentLoggedSets,
   ] = useState<GetLoggedSetsByAthleteLoggedWorkoutExerciseQuery>();
+
+  const [
+    lastLoggedSets,
+    setLastLoggedSets,
+  ] = useState<GetLastLoggedWorkoutQuery>();
 
   const { query } = useRouter();
   const { user } = useUser();
@@ -31,18 +39,37 @@ const ExerciseLog = () => {
       },
     );
 
-    setResult(response);
+    setCurrentLoggedSets(response);
   }, [query, user]);
+
+  const fetchLastLoggedWorkout = useCallback(async () => {
+    const response = await request(
+      GetLastLoggedWorkoutDocument,
+      {
+        athleteAuth0Id: user!.sub,
+        exerciseSlug: query.exerciseSlug,
+        workoutSlug: currentLoggedSets?.loggedWorkout?.workout?.slug,
+        date: currentLoggedSets?.loggedWorkout?.date,
+      },
+    );
+
+    setLastLoggedSets(response);
+  }, [query, user, currentLoggedSets]);
 
   useEffect(() => {
     if (user && query) {
         fetchLoggedSets();
     }
-  }, [query, user, fetchLoggedSets]);
+
+    if (currentLoggedSets) {
+      fetchLastLoggedWorkout();
+    }
+
+  }, [query, user, fetchLoggedSets, fetchLastLoggedWorkout, currentLoggedSets]);
 
   function makeSidebarMenuLinks() {
-    return result && result.loggedWorkout
-      ? result.loggedWorkout!.workout!.exercises.map((exercise) => ({
+    return currentLoggedSets && currentLoggedSets.loggedWorkout
+      ? currentLoggedSets.loggedWorkout!.workout!.exercises.map((exercise) => ({
         href: `/workout-log/${query.loggedWorkoutId}/${exercise.slug}`,
         label: exercise.name,
       }))
@@ -53,7 +80,10 @@ const ExerciseLog = () => {
     fetchLoggedSets();
   };
 
-  if (result === undefined) return <Loading />;
+  if (
+    currentLoggedSets === undefined
+    || lastLoggedSets === undefined
+  ) return <Loading />;
 
   return (
     <>
@@ -63,12 +93,26 @@ const ExerciseLog = () => {
         />
       </Sidebar>
       <Main>
-        <SetTable
-          title={result.exercise!.name}
-          sets={result.loggedSets}
-          workoutSlug={result.loggedWorkout!.workout!.slug}
-          updateSets={handleUpdateSets}
-        />
+        <>
+          <Link href={`/workout-log/${query.loggedWorkoutId}`}>
+            Back to Workout Summary
+          </Link>
+          <SetTable
+            title={currentLoggedSets.exercise!.name}
+            sets={currentLoggedSets.loggedSets}
+            workoutSlug={currentLoggedSets.loggedWorkout!.workout!.slug}
+            updateSets={handleUpdateSets}
+          />
+          {(lastLoggedSets.workout!.loggedWorkouts.length > 0) ? (
+            <SetTable
+              title={`
+                Last Workout:
+                ${lastLoggedSets.workout!.loggedWorkouts[0].date}
+              `}
+              sets={lastLoggedSets.workout!.loggedWorkouts[0].loggedSets}
+            />
+          ) : null}
+        </>
       </Main>
     </>
   );

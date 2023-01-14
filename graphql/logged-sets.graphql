@@ -15,6 +15,7 @@ query getLoggedSetsByAthleteLoggedWorkoutExercise(
     ...loggedSet
   }
   loggedWorkout( where: { id: $loggedWorkoutId } ) {
+    date
     workout {
       slug
       exercises {

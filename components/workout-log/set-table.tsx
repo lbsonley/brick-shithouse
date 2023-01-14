@@ -5,11 +5,16 @@ import styles from "./workout-log.module.scss";
 interface SetsTableProps {
   title: string | undefined;
   sets: LoggedSetFragment[] | undefined;
-  workoutSlug: string | null | undefined;
-  updateSets: () => void;
+  workoutSlug?: string | null | undefined;
+  updateSets?: () => void;
 };
 
-const SetTable = ({ title, sets, workoutSlug, updateSets }: SetsTableProps) => {
+const SetTable = ({
+  title,
+  sets,
+  workoutSlug,
+  updateSets = () => {},
+}: SetsTableProps) => {
   return (
     <div className={styles.setTableContainer}>
       <table className={`${styles.setTable}`}>
@@ -42,10 +47,12 @@ const SetTable = ({ title, sets, workoutSlug, updateSets }: SetsTableProps) => {
               <td></td>
             </tr>
           ))}
-          <SetForm
-            workoutSlug={workoutSlug}
-            updateSets={updateSets}
-          />
+          {workoutSlug && (
+            <SetForm
+              workoutSlug={workoutSlug}
+              updateSets={updateSets}
+            />
+          )}
         </tbody>
       </table>
     </div>

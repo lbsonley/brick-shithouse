@@ -31,6 +31,32 @@ query getLoggedWorkoutById($loggedWorkoutId: ID!) {
   }
 }
 
+query getLastLoggedWorkout(
+  $workoutSlug: String!,
+  $athleteAuth0Id: String!
+  $exerciseSlug: String!
+  $date: Date!
+) {
+  workout(where: {slug: $workoutSlug}) {
+    loggedWorkouts(
+      first: 1
+      skip: 1
+      where: {
+        athlete: { auth0Id: $athleteAuth0Id }
+        date_lte: $date
+      }
+      orderBy: date_DESC
+    ) {
+      date
+      loggedSets(where: {
+        exercise: { slug: $exerciseSlug }
+      }) {
+        ...loggedSet
+      }
+    }
+  }
+}
+
 mutation createLoggedWorkout(
   $date:Date!,
   $athleteAuth0Id:String!,
