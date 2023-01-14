@@ -1,4 +1,9 @@
-import React, { useState, useEffect, forwardRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  forwardRef,
+  ForwardedRef,
+} from "react";
 import styles from "./input.module.scss";
 
 interface InputProps {
@@ -27,7 +32,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>((
     hiddenLabel = false,
     parentHandleChange = () => {},
   },
-  ref,
+  ref: ForwardedRef<HTMLInputElement>,
 ) => {
 
   const [value, setValue] = useState(initialValue);

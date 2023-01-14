@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { FaPlusSquare } from "react-icons/fa";
@@ -22,7 +22,7 @@ const SetForm = ({ workoutSlug, updateSets }: SetsFormProps) => {
     weight: "",
   });
 
-  const repsInputRef = createRef<HTMLInputElement>();
+  const repsInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const isValid = (Boolean(setData.reps) && Boolean(setData.weight));
