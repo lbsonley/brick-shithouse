@@ -1,16 +1,16 @@
 #import loggedSet from "logged-sets.fragments.graphql"
+#import loggedWorkout from "logged-workout.fragments.graphql"
 
 query getLoggedWorkoutsByUser($athleteAuth0Id: String!) {
-  loggedWorkouts(where: {
-    athlete: {
-      auth0Id: $athleteAuth0Id
-    }
-  }) {
-    id
-    date
-    workout {
-    	name
+  loggedWorkouts(
+    where: {
+      athlete: {
+        auth0Id: $athleteAuth0Id
+      }
   	}
+    orderBy: date_DESC
+  ) {
+    ...loggedWorkout
   }
 }
 

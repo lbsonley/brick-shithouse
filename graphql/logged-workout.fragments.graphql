@@ -1,0 +1,14 @@
+#import loggedSet from "logged-sets.fragment.graphql"
+
+fragment loggedWorkout on LoggedWorkout {
+  id
+  date
+  workout {
+    name
+  }
+  loggedSets(
+    first: 50
+  ) {
+    ...loggedSet
+  }
+}

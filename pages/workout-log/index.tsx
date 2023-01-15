@@ -8,6 +8,9 @@ import {
   GetLoggedWorkoutsByUserQuery,
 } from "../../graphql/generated";
 import Loading from "../../components/base/loading";
+import LoggedWorkoutCard
+  from "../../components/workout-log/logged-workout-card";
+import styles from "./workout-log.module.scss";
 
 const WorkoutLog = () => {
   const { user } = useUser();
@@ -35,11 +38,12 @@ const WorkoutLog = () => {
     <Main withContentWrapper>
       <h2 className="heading-2">WorkoutLog</h2>
       <ul>
-        {result.loggedWorkouts.map(({ id, date, workout }) => (
-          <li key={id}>
-            <Link href={`workout-log/${id}`}>
-              {date} {workout!.name}
-            </Link>
+        {result.loggedWorkouts.map((loggedWorkout) => (
+          <li
+            key={loggedWorkout.id}
+            className={styles.workoutLogListItem}
+          >
+            <LoggedWorkoutCard loggedWorkout={loggedWorkout}/>
           </li>
         ))}
       </ul>
