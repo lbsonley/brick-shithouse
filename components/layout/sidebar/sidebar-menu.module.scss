@@ -1,6 +1,10 @@
-@use "../../../styles/utils";
+@use "../../../styles/mixins/elements";
 @use "../../../styles/mixins/typography";
 @use "../../../styles/mixins/a11y";
+
+.sidebarMenu {
+  width: 300px;
+}
 
 .sidebarMenuTitle {
   @include typography.heading-4;
@@ -13,7 +17,7 @@
 }
 
 .sidebarMenuLink {
-  @include utils.block-link;
+  @include elements.block-link;
 
   width: 100%;
 }

@@ -13,13 +13,8 @@
 }
 
 @mixin grid-sidebar {
-  padding: variables.$space-8;
   grid-column: layout-left / sidebar-end;
   grid-row: body-start / body-end;
-
-  @include media-queries.sm-up {
-    padding: variables.$space-16;
-  }
 }
 
 @mixin grid-main {
@@ -35,5 +30,13 @@
 
 @mixin content-max-width-narrow {
   max-width: variables.$max-content-width-narrow;
+  margin: 0 auto;
+}
+
+@mixin content-wrapper-narrow {
+  display: flex;
+  width: 100%;
+  max-width: variables.$max-content-width-narrow;
+  flex-direction: column;
   margin: 0 auto;
 }

@@ -1,5 +1,5 @@
 @use "../../../styles/mixins/layout-utils";
-@use "../../../styles/utils";
+@use "../../../styles/mixins/elements";
 @use "../../../styles/variables";
 
 .header {
@@ -36,7 +36,7 @@
 
 .headerNavLink {
   @include layout-utils.flex-center;
-  @include utils.block-link;
+  @include elements.block-link;
 
   padding: variables.$space-12;
 }

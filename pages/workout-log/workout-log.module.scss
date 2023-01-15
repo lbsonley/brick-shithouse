@@ -1,0 +1,5 @@
+@use "../../styles/mixins/layout-utils";
+
+.workoutLogContent {
+  @include layout-utils.content-wrapper-narrow;
+}

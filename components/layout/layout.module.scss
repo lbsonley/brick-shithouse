@@ -2,6 +2,6 @@
   display: grid;
   width: 100vw;
   height: 100vh;
-  grid-template-columns: [layout-left] 300px [sidebar-end main-start] 1fr [layout-right];
+  grid-template-columns: [layout-left] auto [sidebar-end main-start] 1fr [layout-right];
   grid-template-rows: [layout-top] auto [header-end body-start] 1fr [body-end footer-start] auto [layout-bottom];
 }

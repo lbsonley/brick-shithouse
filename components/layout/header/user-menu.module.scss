@@ -1,5 +1,5 @@
 @use "../../../styles/variables";
-@use "../../../styles/utils";
+@use "../../../styles/mixins/elements";
 
 .userMenu {
   position: relative;
@@ -54,5 +54,5 @@
 .userMenuLink {
   display: block;
 
-  @include utils.block-link;
+  @include elements.block-link;
 }

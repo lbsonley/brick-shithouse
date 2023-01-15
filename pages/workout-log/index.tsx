@@ -32,7 +32,7 @@ const WorkoutLog = () => {
   if (result === undefined) return <Loading />;
 
   return (
-    <Main>
+    <Main withContentWrapper>
       <h2 className="heading-2">WorkoutLog</h2>
       <ul>
         {result.loggedWorkouts.map(({ id, date, workout }) => (

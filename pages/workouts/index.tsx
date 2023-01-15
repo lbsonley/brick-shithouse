@@ -24,7 +24,7 @@ const Workouts: NextPage = () => {
   if (result === undefined) return <Loading />;
 
   return (
-    <Main>
+    <Main withContentWrapper>
       <h2 className="heading-2">Workouts</h2>
       <ul>
         {result.workouts.map(({id, slug, name}) => (

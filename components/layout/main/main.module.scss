@@ -3,3 +3,7 @@
 .main {
   @include layout-utils.grid-main;
 }
+
+.contentWrapperNarrow {
+  @include layout-utils.content-wrapper-narrow;
+}

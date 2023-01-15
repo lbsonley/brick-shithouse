@@ -34,7 +34,7 @@ const Exercises: NextPage = () => {
 
   return (
     <>
-      <Main>
+      <Main withContentWrapper>
         <h2 className="heading-3">Exercises</h2>
         <ul className={styles.exerciseList}>
           {result.exercises.map(({id, name}) => (

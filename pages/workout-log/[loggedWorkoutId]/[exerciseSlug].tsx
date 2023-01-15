@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useUser } from "@auth0/nextjs-auth0/client";
+import Link from "next/link";
 import {
   GetLastLoggedWorkoutDocument,
   GetLastLoggedWorkoutQuery,
@@ -13,7 +14,7 @@ import Sidebar from "../../../components/layout/sidebar/sidebar";
 import SidebarMenu from "../../../components/layout/sidebar/sidebar-menu";
 import SetTable from "../../../components/workout-log/set-table";
 import Loading from "../../../components/base/loading";
-import Link from "next/link";
+import styles from "../workout-log.module.scss";
 
 const ExerciseLog = () => {
   const [
@@ -97,21 +98,23 @@ const ExerciseLog = () => {
           <Link href={`/workout-log/${query.loggedWorkoutId}`}>
             Back to Workout Summary
           </Link>
-          <SetTable
-            title={currentLoggedSets.exercise!.name}
-            sets={currentLoggedSets.loggedSets}
-            workoutSlug={currentLoggedSets.loggedWorkout!.workout!.slug}
-            updateSets={handleUpdateSets}
-          />
-          {(lastLoggedSets.workout!.loggedWorkouts.length > 0) ? (
+          <div className={styles.workoutLogContent}>
             <SetTable
-              title={`
-                Last Workout:
-                ${lastLoggedSets.workout!.loggedWorkouts[0].date}
-              `}
-              sets={lastLoggedSets.workout!.loggedWorkouts[0].loggedSets}
+              title={currentLoggedSets.exercise!.name}
+              sets={currentLoggedSets.loggedSets}
+              workoutSlug={currentLoggedSets.loggedWorkout!.workout!.slug}
+              updateSets={handleUpdateSets}
             />
-          ) : null}
+            {(lastLoggedSets.workout!.loggedWorkouts.length > 0) ? (
+              <SetTable
+                title={`
+                  Last Workout:
+                  ${lastLoggedSets.workout!.loggedWorkouts[0].date}
+                `}
+                sets={lastLoggedSets.workout!.loggedWorkouts[0].loggedSets}
+              />
+            ) : null}
+          </div>
         </>
       </Main>
     </>
